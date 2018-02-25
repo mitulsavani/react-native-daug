@@ -1,13 +1,33 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import LoginScreen from './app/screens/LoginScreen';
+
 export default class App extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      screen: 'login'
+    }
+  }
+
+
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
+
+    const {screen} = this.state
+
+    if(screen === 'login'){
+      return <LoginScreen />
+    }
+    else 
+    {
+      return (
+        <View style={styles.container}>
+          <Text>Open up App.js to start working on your app!</Text>
+        </View>
+      )
+    }
   }
 }
 
