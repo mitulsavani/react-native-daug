@@ -51,8 +51,8 @@ export default class LoginScreen extends React.Component {
       <View style={styles.container}>
           <Input
                 placeholder = 'Email'
-                palceholderTextColor="pink"
-                inputStyle = {{ color: 'white' }}
+                //TODO: Font probably goes down here
+                 inputStyle = {{ color: 'white' }}
                 autoCapitalize = "none"
                 autoCorrect = {false}
                 keyboardType = "email-address"
@@ -69,7 +69,7 @@ export default class LoginScreen extends React.Component {
           />
           <Input
                 placeholder = 'Password'
-                palceholderTextColor="white"
+                
                 secureTextEntry
                 inputStyle = {{ color: 'white' }}
                 autoCapitalize = "none"
@@ -88,7 +88,22 @@ export default class LoginScreen extends React.Component {
           />
         <View style={styles.ButtonContainer}>
             <Button
-              text='Log in'
+              text='Login'
+              buttonStyle={{
+                backgroundColor: '#3B8AB8',
+                width: 200,
+                height: 45,
+                borderColor: "transparent",
+                borderWidth: 0,
+                borderRadius: 5
+              }}
+              icon={
+                <Entypo
+                  name='login'
+                  size={24}
+                  color='white'
+                />
+              }
               onPress = {() => this.onSubmitButtonPressed(email,password)}
             />
         </View>
@@ -104,16 +119,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  inputContainer: {
-    height: 50,
-    fontSize: 25,
-    borderColor: 'white',
-    borderRadius: 10,
-    borderWidth: 1,
-    alignItems: 'center',
-    color: 'white',
-    shadowOpacity: 0.5
-  },
   inputElementContainer: {
     height: 45,
     marginVertical: 5,
@@ -121,7 +126,6 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     borderWidth: 1,
     borderColor: 'white',
-    marginVertical: 10,
   },
   ButtonContainer: {
     marginTop: 40
