@@ -1,8 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View,  } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Keyboard, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
-import { MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, SimpleLineIcons, Entypo } from '@expo/vector-icons';
+
+
+import SocialFeedScreen from './SocialFeedScreen';
 
 export default class LoginScreen extends React.Component {
   constructor(props)
@@ -10,12 +13,40 @@ export default class LoginScreen extends React.Component {
     super(props);
 
     this.state = {
-      text: ''
+      screen: 'null',
+      email: '',
+      password: '' 
     };
   }
 
+  onSubmitButtonPressed = (email, password) => {
+    if (email !== '' && password !== '') {
+      Keyboard.dismiss();
+    
+      if (email === 'mitul@gmail.com' && password === 'savani') {
+        Alert.alert(
+          'Success',
+          'Email: mitul@gmail.com\nPassword is "savani"',
+        );
+        this.setState({ screen: 'SocialFeedScreen' });
+      } else {
+        Alert.alert(
+          'Failure',
+          'Email is mitul@gmail.com, and password is "savani".',
+        );
+      }
+    }
+  }
+
+
 
   render() {
+    const{ screen, email, password} = this.state;
+
+    if(screen === SocialFeedScreen)
+    {
+      return <SocialFeedScreen/>;
+    }
     return (
       <View style={styles.container}>
           <Input
@@ -34,12 +65,12 @@ export default class LoginScreen extends React.Component {
                     color = 'white'
                   />
                 }
+                onChangeText={(email) => this.setState({email})}
           />
           <Input
                 placeholder = 'Password'
                 palceholderTextColor="white"
                 secureTextEntry
-                selectTextOnFocus
                 inputStyle = {{ color: 'white' }}
                 autoCapitalize = "none"
                 autoCorrect = {false}
@@ -53,7 +84,14 @@ export default class LoginScreen extends React.Component {
                     color = 'white'
                   />
                 }
+                onChangeText={(password) => this.setState({password})}
           />
+        <View style={styles.ButtonContainer}>
+            <Button
+              text='Log in'
+              onPress = {() => this.onSubmitButtonPressed(email,password)}
+            />
+        </View>
       </View>
     );
   }
@@ -78,6 +116,14 @@ const styles = StyleSheet.create({
   },
   inputElementContainer: {
     height: 45,
-    marginVertical: 5
+    marginVertical: 5,
+    paddingLeft: 8,
+    borderRadius: 40,
+    borderWidth: 1,
+    borderColor: 'white',
+    marginVertical: 10,
+  },
+  ButtonContainer: {
+    marginTop: 40
   }
 });

@@ -1,12 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Button} from 'react-native';
 
+import DAUG_LOGO from '../../assets/daugLogo.png';
+
 export default class IntroScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image style={styles.dauglogo} source = {require('../Images/daugLogo.png')} />
+          <Image style={styles.dauglogo} source = {DAUG_LOGO} />
          </View>
         <View style={styles.joinus}>
           <View style={styles.login}>
@@ -35,7 +37,6 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 8,
-    // width: 375,
     backgroundColor: '#ED8071',
     justifyContent: 'center',
     alignItems: 'center'
