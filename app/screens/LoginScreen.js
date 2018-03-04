@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View, Keyboard, Alert } from 'react-native
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
 import { MaterialCommunityIcons, SimpleLineIcons, Entypo } from '@expo/vector-icons';
-
+import { LinearGradient } from 'expo';
 
 import SocialFeedScreen from './SocialFeedScreen';
 
@@ -49,7 +49,12 @@ export default class LoginScreen extends React.Component {
       return <SocialFeedScreen/>;
     }
     return (
-      <View style={styles.container}>
+      <LinearGradient
+        colors={['#4C3ADC', '#ff9068', '#F5C86D','#C83E70','#E93856', '#9B37CF', '#E5385B', '#E43E4B',  ]}
+        start={{x: 1.0, y: 0.0}}
+        end={{x:0.0, y: 1.0}}
+        locations={[0.1,0.8]}
+        style={styles.mainContent}>
           <Input
                 placeholder = 'Email'
                 //TODO: Font probably goes down here
@@ -108,15 +113,15 @@ export default class LoginScreen extends React.Component {
               onPress = {() => this.onSubmitButtonPressed(email,password)}
             />
         </View>
-      </View>
+
+      </LinearGradient>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  mainContent: {
     flex: 1,
-    backgroundColor: '#ED8071',
     alignItems: 'center',
     justifyContent: 'center',
   },

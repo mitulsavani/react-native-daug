@@ -31,7 +31,7 @@ export default class ProfileScreen extends React.Component {
     this.setState({ screen: 'IntroScreen' })
   }
   editProfilePressed =() => {
-    //Here will the more info of my Rocco!
+    //Here will the more info of my Rocco
   }
 
   render() {

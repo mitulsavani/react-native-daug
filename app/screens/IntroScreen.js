@@ -34,27 +34,39 @@ export default class IntroScreen extends React.Component {
     }
 
     return (
-      <View style={styles.container}>
+      <LinearGradient
+        colors={['#4C3ADC', '#ff9068', '#F5C86D','#C83E70','#E93856', '#9B37CF', '#E5385B', '#E43E4B',  ]}
+        start={{x: 1.0, y: 0.0}}
+        end={{x:0.0, y:1.0}}
+        locations={[0.1,0.8]}
+        style={styles.container}>
         <View style={styles.imageContainer}>
           <Image style={styles.dauglogo} source = {DAUG_LOGO} />
          </View>
-        <View style={styles.joinus}>
+
+
+         <LinearGradient
+        colors={[ 'grey', 'lightgrey' ]}
+        end={{x: 1.0, y: 0.0}}
+        start={{x:0.0, y:1.0}}
+        locations={[0.1,0.8]}
+         style={styles.joinus}>
           <View style={styles.login}>
           <Button 
             title="Login"
-            color= 'white'
+            color= 'black'
             onPress={() => this.LoginButtonPressed()}
           />
           </View>
           <View style={styles.signup}>
           <Button onPress={() => this.SignUpButtonContainer()}
             title="Sign Up"
-            color= 'white'
+            color= 'black'
             size = "30"
           />
           </View>
-        </View>
-      </View>
+        </LinearGradient>
+      </LinearGradient>
     );
   }
 }
@@ -62,11 +74,11 @@ export default class IntroScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   imageContainer: {
     flex: 8,
-    backgroundColor: '#ED8071',
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -80,6 +92,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#A0545B',
     justifyContent: 'center',
     alignItems: 'center',
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 1,
+      width: 1
+    }
   },
   login: {
     flex: 1,

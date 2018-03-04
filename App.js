@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import PropTypes from 'prop-types';
 
 import LoginScreen from './app/screens/LoginScreen';
 import IntroScreen from './app/screens/IntroScreen';
@@ -22,7 +23,7 @@ export default class App extends React.Component {
     const {screen} = this.state
 
     if(screen === 'social'){
-      return <SocialFeedScreen/>
+      return <IntroScreen/>
     }
     else 
     {
