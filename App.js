@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import LoginScreen from './app/screens/LoginScreen';
-import IntroScreen from './app/screens/IntroSreen';
+import IntroScreen from './app/screens/IntroScreen';
 import ProfileScreen from './app/screens/ProfileScreen';
 import SignupScreen from './app/screens/SignupScreen';
 import SocialFeedScreen from './app/screens/SocialFeedScreen';

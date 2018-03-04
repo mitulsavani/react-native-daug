@@ -2,16 +2,46 @@ import React from 'react';
 import { StyleSheet, Text, View, Vibration, Image, ScrollView } from 'react-native';
 import { MaterialCommunityIcons, SimpleLineIcons, Entypo } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
-
+import { Font } from 'expo';
 import Rocco_Cover from '../../assets/dogCover.jpg';
 import Rocco_DisplayPic from '../../assets/Rocco_displayPic.jpg';
 
-export default class ProfileScreen extends React.Component {
-  render() {
-    return (
-    
-      <View style={styles.mainContainer}>
+import IntroScreen from './IntroScreen'
 
+export default class ProfileScreen extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      fontLoaded: false,
+      screen: 'null'
+    };
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'Comfortaa': require('../../assets/fonts/Comfortaa.ttf'),
+      'ComfortaaBold': require('../../assets/fonts/ComfortaaBold.ttf')
+    });
+
+    this.setState({ fontLoaded: true });
+  }
+
+  logOutPressed =()=> {
+    this.setState({ screen: 'IntroScreen' })
+  }
+  editProfilePressed =() => {
+    //Here will the more info of my Rocco!
+  }
+
+  render() {
+    const { screen } = this.state
+
+    if (screen === 'IntroScreen') {
+      return <IntroScreen />; }
+
+    return (
+      <View style={styles.mainContainer}>
           <View style={styles.daugCoverPic}>
               <Image style={styles.daugcover} source = {Rocco_Cover} />
           </View>
@@ -21,64 +51,60 @@ export default class ProfileScreen extends React.Component {
                   <View style = { styles.displayPic } >
                       <Image style={styles.roccoDisplayPic} source = {Rocco_DisplayPic} />
                   </View>
-                  <View style = { styles.activityContainer } >
-                          
-                          <View style = { styles.postAndFollowContainer} >
-                              <View style = {styles.posts} >
-                                  <Text style = {{fontWeight: 'bold'}}> 
-                                      3 
-                                  </Text>
-                                  <Text style = {{fontWeight: 'bold'}}>
-                                      Post 
-                                  </Text>
-                              </View>
-                              <View style = {styles.followers} >
-                                  <Text style = {{fontWeight: 'bold'}}> 
-                                      501 
-                                  </Text>
-                                  <Text style = {{fontWeight: 'bold'}}> 
-                                      Followers 
-                                  </Text>
-                              </View>
-                              <View style = {styles.following} >
-                                  <Text style = {{fontWeight: 'bold'}}> 
-                                      99 
-                                  </Text>
-                                  <Text style = {{fontWeight: 'bold'}}> 
-                                      Following 
-                                  </Text>
-                              </View>
+                  <View style = { styles.activityContainer } > 
+                        <View style = { styles.postAndFollowContainer} >
+                            <View style = {styles.posts} >
+                                <Text style = {{fontWeight: 'bold'}}> 
+                                    3 
+                                </Text>
+                                <Text style = {{fontWeight: 'bold'}}>
+                                    Post 
+                                </Text>
+                            </View>
+                            <View style = {styles.followers} >
+                                <Text style = {{fontWeight: 'bold'}}> 
+                                    501 
+                                </Text>
+                                <Text style = {{fontWeight: 'bold'}}> 
+                                    Followers 
+                                </Text>
+                            </View>
+                            <View style = {styles.following} >
+                                <Text style = {{fontWeight: 'bold'}}> 
+                                    99 
+                                </Text>
+                                <Text style = {{fontWeight: 'bold'}}> 
+                                    Following 
+                                </Text>
+                            </View>
+                        </View>
 
-                          </View>
-
-                          <View style = { styles.editProfileContainer} >
-                                <View style={styles.editButton}>
-                                    <Button
-                                      text='Edit Profile'
-                                      textStyle={{ fontSize: 12, color: 'black'}}
-                                      buttonStyle={{
-                                        backgroundColor: 'white',
-                                        width: 100,
-                                        height: 20,
-                                        borderColor: 'black',
-                                        borderWidth: 1,
-                                        borderRadius: 5
-                                      }}
-                                      icon={
-                                        <MaterialCommunityIcons
-                                          name='account-edit'
-                                          size={20}
-                                          color='black'
-                                        />
-                                      }
-                                      onPress = {() => this.onSubmitButtonPressed()}
-                                    />
-                                </View>
-                          </View>
+                        <View style = { styles.editProfileContainer} >
+                              <View style={styles.editButton}>
+                                  <Button
+                                    text='Edit Profile'
+                                    textStyle={{ fontSize: 12, color: 'black'}}
+                                    buttonStyle={{
+                                      backgroundColor: 'white',
+                                      width: 100,
+                                      height: 20,
+                                      borderColor: 'black',
+                                      borderWidth: 1,
+                                      borderRadius: 5
+                                    }}
+                                    icon={
+                                      <MaterialCommunityIcons
+                                        name='account-edit'
+                                        size={20}
+                                        color='black'
+                                      />
+                                    }
+                                    onPress = {() => this.editProfilePressed()}
+                                  />
+                              </View>
+                        </View>
                   </View>
               </View>
-
-              
               <View style = { styles.bioData } >
                   <View style = { styles.name } >
                           <Text style = {{fontSize: 25, fontWeight: 'bold'}}>
@@ -112,7 +138,7 @@ export default class ProfileScreen extends React.Component {
                         color='white'
                       />
                     }
-                    onPress = {() => this.onSubmitButtonPressed()}
+                    onPress = {() => this.logOutPressed()}
                   />
               </View>
           </View>
@@ -126,8 +152,6 @@ const styles = StyleSheet.create({
 
   mainContainer: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'wheat',
   },
 
   daugCoverPic: {

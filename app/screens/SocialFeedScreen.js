@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, FlatList, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, FlatList, Image, TouchableOpacity } from 'react-native';
 import ProfileScreen from './ProfileScreen';
 import { Icon } from 'react-native-elements';
+import {Font} from 'expo';
 import { MaterialCommunityIcons, SimpleLineIcons, Entypo } from '@expo/vector-icons';
 
 
@@ -15,36 +16,37 @@ export default class SocialFeedScreen extends React.Component {
       screen: '',
       commented: false,
       liked: false,
-      //fontLoaded:false
+      fontLoaded:false
     };
   }
 
-  // async componentDidMount() {
-  //   await Font.loadAsync({
-  //     'Comfortaa': require('../../assets/fonts/Comfortaa.ttf')
-  //   });
+  async componentDidMount() {
+    await Font.loadAsync({
+      'Comfortaa': require('../../assets/fonts/Comfortaa.ttf'),
+      'ComfortaaBold': require('../../assets/fonts/ComfortaaBold.ttf')
+    });
 
-  //   this.setState({ fontLoaded: true });
-  // }
+    this.setState({ fontLoaded: true });
+  }
 
   renderPost(member){
-    const {liked, commented} = this.state;
+    const {liked, commented,screen} = this.state;
 
     return(
       <View style = {styles.postContainer} key={member}>
-          <View style = {styles.postHeader} >
-              <View style = {styles.displayImageContainer} >
+          <View style = {styles.postHeader} onPress={() => this.setState({ screen: 'ProfileScreen', selectedIndex: item.id })} >
+              <TouchableOpacity style = {styles.displayImageContainer} >
                   <Image source={{ url: member.image }} style={styles.avatar} />              
-              </View>
+              </TouchableOpacity>
               
               <View style = {styles.nameAndImageContainer} >
                   <View style = {styles.avatarName} >
-                      <Text style = {{fontSize: 20, fontWeight: 'bold', }}> 
+                      <Text style = {{fontSize: 17, fontFamily: 'ComfortaaBold'}}> 
                         {member.name} 
                        </Text>
                   </View>
                   <View style = {styles.location} >
-                      <Text style = {{ color: '#3B3C40', fontSize: 15, fontWeight: 'bold', fontStyle: 'italic' }}> 
+                      <Text style = {{ color: '#3B3C40', fontSize: 12, fontFamily: 'Comfortaa', fontStyle: 'italic' }}> 
                         {member.location} 
                        </Text>
                   </View>
@@ -52,14 +54,14 @@ export default class SocialFeedScreen extends React.Component {
           </View>
           <View style = {styles.postImageCaptionContainer} >
               <Image source={{ url: member.post.image }} style={styles.postImage} resizeMode="cover" />
-              <Text style = {{marginLeft: 10, marginTop: 10}}> 
+              <Text style = {{marginLeft: 10, marginTop: 10, fontFamily: 'Comfortaa'}}> 
                   {member.post.caption}
               </Text>
           </View>
           
           <View style = {styles.postLogs} >
               <View style = {styles.postDate} >
-                  <Text style = {{fontSize: 11, color: '#4C4B4B'}}> {member.post.date} </Text>
+                  <Text style = {{fontSize: 11, color: '#4C4B4B', fontFamily: 'Comfortaa'}}> {member.post.date} </Text>
               </View>
               <View style = {styles.postActionView} >
                   <Icon
@@ -85,18 +87,28 @@ export default class SocialFeedScreen extends React.Component {
   render() {
     return (
       <ScrollView>
+        {this.state.fontLoaded &&
+          <View style = {styles.mainContent} >
               <FlatList style={styles.list} 
                 keyExtractor = {(item, index) => index}
                 extraData = {this.state}
                 data = {SOCIAL_FEED_MOCK_DATA}
                 renderItem = {({ item }) => this.renderPost(item)}
               />
+          </View>
+        }
       </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  mainContent:{
+    flex: 1,
+    justifyContent: 'center',
+    marginTop: 50,
+    marginBottom: 50,
+  },
   postContainer: {
       borderBottomWidth: 1,
       borderColor: '#aaaaaa'
@@ -162,6 +174,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     color: '#44484B',
     fontSize: 15,
+    fontFamily: 'Comfortaa'
   }
   
 });

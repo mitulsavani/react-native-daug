@@ -7,21 +7,23 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { MaterialCommunityIcons, SimpleLineIcons, Entypo } from '@expo/vector-icons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+import IntroScreen from './IntroScreen'
+
 export default class SignupScreen extends React.Component {
   constructor(props)
   {
     super(props)
 
     this.state = {
-      screen: 'null',
+      screen: null,
       name: '',
       email: '',
       password: ''
     };
   }
 
-  onSubmitButtonPressed = (name, email, password) => {
-
+  onSignUpButtonPressed = () => {
+    const {screen, name, email, password} = this.state
     //Display alert
        if (name != '' && email != '' && password != '') {
            Keyboard.dismiss
@@ -34,6 +36,7 @@ export default class SignupScreen extends React.Component {
           ],
             { cancelable: false }
         )
+        this.setState({ screen: 'IntroScreen' })
       } else {
             Keyboard.dismiss
           console.log("Incorrect Email Or Password Entered")
@@ -51,6 +54,10 @@ export default class SignupScreen extends React.Component {
   render() {
     const{ screen, name, email, password} = this.state;
 
+    if(screen === 'IntroScreen')
+    {
+      return (<IntroScreen/>);
+    }
     return (
         <View style={styles.container}>
             <Input
@@ -123,7 +130,7 @@ export default class SignupScreen extends React.Component {
                     color='white'
                   />
                 }
-                onPress = {() => this.onSubmitButtonPressed(name, email,password)}
+                onPress = {() => this.onSignUpButtonPressed()}
               />
           </View>
         </View>

@@ -1,10 +1,38 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Button} from 'react-native';
-
+import {Font} from 'expo';
 import DAUG_LOGO from '../../assets/daugLogo.png';
+import {Comfortaa} from '../../assets/fonts/Comfortaa.ttf';
+
+import LoginScreen from './LoginScreen'
+import SignUpScreen from './SignupScreen'
 
 export default class IntroScreen extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      screen: null
+    };
+  }
+
+
+  LoginButtonPressed =()=> {
+    this.setState({ screen: 'LoginScreen' })
+  }
+  SignUpButtonContainer =()=> {
+    this.setState({ screen: 'SignUpScreen' })
+  }
+
   render() {
+    const { screen } = this.state
+
+    if (screen === 'LoginScreen') {
+      return <LoginScreen />;
+    } else if (screen === 'SignUpScreen') {
+      return <SignUpScreen />;
+    }
+
     return (
       <View style={styles.container}>
         <View style={styles.imageContainer}>
@@ -12,13 +40,14 @@ export default class IntroScreen extends React.Component {
          </View>
         <View style={styles.joinus}>
           <View style={styles.login}>
-          <Button onPress={() => this.changeBackground()}
+          <Button 
             title="Login"
             color= 'white'
+            onPress={() => this.LoginButtonPressed()}
           />
           </View>
           <View style={styles.signup}>
-          <Button onPress={() => this.changeBackground()}
+          <Button onPress={() => this.SignUpButtonContainer()}
             title="Sign Up"
             color= 'white'
             size = "30"

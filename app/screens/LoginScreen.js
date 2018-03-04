@@ -13,13 +13,14 @@ export default class LoginScreen extends React.Component {
     super(props);
 
     this.state = {
-      screen: 'null',
+      screen: null,
       email: '',
       password: '' 
     };
   }
 
-  onSubmitButtonPressed = (email, password) => {
+  onSubmitButtonPressed = () => {
+    const { screen,email, password } = this.state
     if (email !== '' && password !== '') {
       Keyboard.dismiss();
     
@@ -28,7 +29,7 @@ export default class LoginScreen extends React.Component {
           'Success',
           'Email: mitul@gmail.com\nPassword is "savani"',
         );
-        this.setState({ screen: 'SocialFeedScreen' });
+        this.setState({ screen: 'SocialFeedScreen' })
       } else {
         Alert.alert(
           'Failure',
@@ -43,7 +44,7 @@ export default class LoginScreen extends React.Component {
   render() {
     const{ screen, email, password} = this.state;
 
-    if(screen === SocialFeedScreen)
+    if(screen === 'SocialFeedScreen')
     {
       return <SocialFeedScreen/>;
     }
