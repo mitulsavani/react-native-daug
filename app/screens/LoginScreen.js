@@ -35,7 +35,7 @@ export default class LoginScreen extends React.Component {
           'Success',
           'Email: mitul@gmail.com\nPassword is "savani"',
         );
-        this.setState({ screen: 'SocialFeedScreen' })
+        this.props.navigation.navigate('Home')
       } else {
         Alert.alert(
           'Failure',

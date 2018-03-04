@@ -27,9 +27,6 @@ export default class ProfileScreen extends React.Component {
     this.setState({ fontLoaded: true });
   }
 
-  logOutPressed =()=> {
-    this.setState({ screen: 'IntroScreen' })
-  }
   editProfilePressed =() => {
     //Here will the more info of my Rocco
   }
@@ -138,7 +135,7 @@ export default class ProfileScreen extends React.Component {
                         color='white'
                       />
                     }
-                    onPress = {() => this.logOutPressed()}
+                    onPress = {() => this.props.navigation.navigate('Intro')}
                   />
               </View>
           </View>

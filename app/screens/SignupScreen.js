@@ -31,18 +31,18 @@ export default class SignupScreen extends React.Component {
   onSignUpButtonPressed = () => {
     const {screen, name, email, password} = this.state
     //Display alert
-       if (name != '' && email != '' && password != '') {
+       if (name != '') {
            Keyboard.dismiss
          console.log("Correct Phrase Entered")
          Alert.alert(
              'Success!',
            'Name: ' + name + '\nEmail: ' + email + '\nPassword ' + password,
             [
-                {text: 'OK', onPress: () => console.log('OK Pressed')},
+                {text: 'OK', onPress: () => this.props.navigation.navigate('Home')},
           ],
             { cancelable: false }
         )
-        this.setState({ screen: 'IntroScreen' })
+        
       } else {
             Keyboard.dismiss
           console.log("Incorrect Email Or Password Entered")
@@ -50,7 +50,7 @@ export default class SignupScreen extends React.Component {
               'Invalid',
             'Please fill all the fields', 
             [
-                {text: 'Try Again', onPress: () => console.log('Try Again Pressed')},
+                {text: 'Try Again', onPress: () => this.props.navigation.navigate('Home')},
           ],
             { cancelable: false},
         )
