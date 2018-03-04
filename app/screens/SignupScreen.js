@@ -60,7 +60,6 @@ export default class SignupScreen extends React.Component {
     }
     return (
       <LinearGradient
-        
         colors={['#4C3ADC', '#ff9068', '#F5C86D','#C83E70','#E93856', '#9B37CF', '#E5385B', '#E43E4B',  ]}
         start={{x: 1.0, y: 0.0}}
         end={{x:0.0, y: 1.0}}

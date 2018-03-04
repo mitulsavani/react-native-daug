@@ -64,10 +64,10 @@ Social feed screen based on Facebook.
 <img src="screenshots/LoginFail.png" width="250" />
 </div>
 <div style={{display: flex; flex-direction: row}}>
-<img src="screenshots/SignUp.png" width="250" />
+<img src="screenshots/Signup.png" width="250" />
 <img src="screenshots/SocialFeed.png" width="250" />
 <img src="screenshots/SocialFeed2.png" width="250" />
-<img src="screenshots/Profile" width="250" />
+<img src="screenshots/Profile.png" width="250" />
 </div>
 
 ## Submission
