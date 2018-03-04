@@ -13,13 +13,22 @@ export default class SocialFeedScreen extends React.Component {
 
     this.state = {
       screen: '',
-      isCommented: false,
-      isLiked: false
+      commented: false,
+      liked: false,
+      //fontLoaded:false
     };
   }
 
+  // async componentDidMount() {
+  //   await Font.loadAsync({
+  //     'Comfortaa': require('../../assets/fonts/Comfortaa.ttf')
+  //   });
+
+  //   this.setState({ fontLoaded: true });
+  // }
+
   renderPost(member){
-    const {isLiked, isCommented} = this.state;
+    const {liked, commented} = this.state;
 
     return(
       <View style = {styles.postContainer} key={member}>
@@ -35,24 +44,39 @@ export default class SocialFeedScreen extends React.Component {
                        </Text>
                   </View>
                   <View style = {styles.location} >
-                    {/* leftIcon = {
-                      <Entypo
-                        name = 'location-pin'
-                        size = {24}
-                        color = 'white'
-                      />
-                    } */}
-                      <Text style = {{fontSize: 15, fontWeight: 'bold', fontStyle: 'italic' }}> 
+                      <Text style = {{ color: '#3B3C40', fontSize: 15, fontWeight: 'bold', fontStyle: 'italic' }}> 
                         {member.location} 
                        </Text>
                   </View>
               </View>
           </View>
           <View style = {styles.postImageCaptionContainer} >
-              <Text> Image </Text>
+              <Image source={{ url: member.post.image }} style={styles.postImage} resizeMode="cover" />
+              <Text style = {{marginLeft: 10, marginTop: 10}}> 
+                  {member.post.caption}
+              </Text>
           </View>
+          
           <View style = {styles.postLogs} >
-              <Text> Logs </Text>
+              <View style = {styles.postDate} >
+                  <Text style = {{fontSize: 11, color: '#4C4B4B'}}> {member.post.date} </Text>
+              </View>
+              <View style = {styles.postActionView} >
+                  <Icon
+                  name={commented ? "ios-chatbubbles" : "ios-chatbubbles-outline"}
+                  color={commented ? 'black' : null} type="ionicon" size={25}
+                  onPress={() => this.setState({ commented: !commented })}
+                  />
+                  <Text style={styles.postActionText}>10</Text>
+              </View>
+              <View style={[styles.postActionView, {marginRight: 20}]}>
+                  <Icon
+                    name={liked ? "ios-heart" : "ios-heart-outline"}
+                    color={liked ? 'red' : null} type="ionicon" size={25}
+                    onPress={() => this.setState({ liked: !liked })}
+                  />
+                  <Text style={styles.postActionText}>200</Text>
+              </View>
           </View>
       </View>
     )
@@ -61,21 +85,18 @@ export default class SocialFeedScreen extends React.Component {
   render() {
     return (
       <ScrollView>
-            <FlatList style={styles.list} 
-              keyExtractor = {(item, index) => index}
-              extraData = {this.state}
-              data = {SOCIAL_FEED_MOCK_DATA}
-              renderItem = {({ item }) => this.renderPost(item)}
-            />
+              <FlatList style={styles.list} 
+                keyExtractor = {(item, index) => index}
+                extraData = {this.state}
+                data = {SOCIAL_FEED_MOCK_DATA}
+                renderItem = {({ item }) => this.renderPost(item)}
+              />
       </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
-    flex: 1,
-  },
   postContainer: {
       borderBottomWidth: 1,
       borderColor: '#aaaaaa'
@@ -86,12 +107,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   postImageCaptionContainer: {
-    height: 250,
-    backgroundColor: 'red'
+    backgroundColor: '#f9f9f9'
   },
   postLogs: {
     height: 50,
-    backgroundColor: 'lightgreen'
+    flexDirection: 'row',
   },
   displayImageContainer: {
     flex: 2,
@@ -120,5 +140,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     marginLeft: 5
+  },
+  postImage: {
+    width: '100%',
+    height: 250,
+  },
+  postDate: {
+    flex: 3,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    marginLeft: 20,
+  },
+  postActionView: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+  },
+  postActionText: {
+    marginLeft: 10,
+    color: '#44484B',
+    fontSize: 15,
   }
+  
 });
