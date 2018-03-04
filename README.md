@@ -57,9 +57,7 @@ Social feed screen based on Facebook.
 - [x] Attach screenshots/gif of screens to `README.MD`
 
 ### Demo
-<div style={{display: flex; flex-direction: row}}>
-<img src="screenshots/intro_screen.png" width="250" />
-</div>
+
 <div style={{display: flex; flex-direction: row}}>
 <img src="screenshots/Intro.png" width="250" />
 <img src="screenshots/Login.png" width="250" />
