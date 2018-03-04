@@ -12,7 +12,7 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      screen: 'profile'
+      screen: 'social'
     }
   }
 
@@ -21,8 +21,8 @@ export default class App extends React.Component {
 
     const {screen} = this.state
 
-    if(screen === 'profile'){
-      return <ProfileScreen/>
+    if(screen === 'social'){
+      return <SocialFeedScreen/>
     }
     else 
     {

@@ -13,7 +13,7 @@ export default class ProfileScreen extends React.Component {
       <View style={styles.mainContainer}>
 
           <View style={styles.daugCoverPic}>
-              <Image style={styles.dauglogo} source = {Rocco_Cover} />
+              <Image style={styles.daugcover} source = {Rocco_Cover} />
           </View>
 
           <View style={styles.infoContainer}>
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: 'white'
   },
-  dauglogo: {
+  daugcover: {
     width: 400,
     height: 180,
     marginLeft: 25
