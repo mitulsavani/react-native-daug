@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { StackNavigation } from 'react-navigation';
 import PropTypes from 'prop-types';
+import IntroStack from './app/navigation/IntroStack';
 
 import LoginScreen from './app/screens/LoginScreen';
 import IntroScreen from './app/screens/IntroScreen';
@@ -9,30 +11,12 @@ import SignupScreen from './app/screens/SignupScreen';
 import SocialFeedScreen from './app/screens/SocialFeedScreen';
 
 export default class App extends React.Component {
-  constructor(props){
-    super(props);
 
-    this.state = {
-      screen: 'social'
-    }
-  }
-
-
-  render() {
-
-    const {screen} = this.state
-
-    if(screen === 'social'){
-      return <IntroScreen/>
-    }
-    else 
-    {
+  render() 
+  {
       return (
-        <View style={styles.container}>
-          <Text>Open up App.js to start working on your app!</Text>
-        </View>
+        <IntroStack />
       )
-    }
   }
 }
 

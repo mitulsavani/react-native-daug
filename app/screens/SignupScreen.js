@@ -10,8 +10,14 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import IntroScreen from './IntroScreen'
 
 export default class SignupScreen extends React.Component {
-  constructor(props)
-  {
+  static navigationOptions = {
+    title: "Let's get Started",
+    headerStyle: {backgroundColor: '#4C3ADC', borderBottomWidth: 0},
+    headerTintColor: 'white',
+    headerTitleStyle: { color: 'white', fontSize: 20 }
+  };
+
+  constructor(props){
     super(props)
 
     this.state = {
@@ -79,7 +85,7 @@ export default class SignupScreen extends React.Component {
                       color = 'white'
                     />
                   }
-                  onChangeText={(name) => this.setState({name})}
+                  //onChangeText={(name) => this.setState({name})}
             />
             <Input
                   placeholder = 'Email'

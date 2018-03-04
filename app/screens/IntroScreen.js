@@ -8,6 +8,12 @@ import LoginScreen from './LoginScreen'
 import SignUpScreen from './SignupScreen'
 
 export default class IntroScreen extends React.Component {
+  static navigationOptions = {
+    title: "",
+    header: null
+
+  };
+  
   constructor(props) {
     super(props);
 
@@ -55,11 +61,11 @@ export default class IntroScreen extends React.Component {
           <Button 
             title="Login"
             color= 'black'
-            onPress={() => this.LoginButtonPressed()}
+            onPress={() => this.props.navigation.navigate('Login')}
           />
           </View>
           <View style={styles.signup}>
-          <Button onPress={() => this.SignUpButtonContainer()}
+          <Button onPress={() => this.props.navigation.navigate('Signup')}
             title="Sign Up"
             color= 'black'
             size = "30"

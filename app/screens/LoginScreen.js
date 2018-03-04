@@ -8,8 +8,14 @@ import { LinearGradient } from 'expo';
 import SocialFeedScreen from './SocialFeedScreen';
 
 export default class LoginScreen extends React.Component {
-  constructor(props)
-  {
+  static navigationOptions = {
+    title: "Login",
+    headerStyle: {backgroundColor: '#4C3ADC', borderBottomWidth: 0},
+    headerTintColor: 'white',
+    headerTitleStyle: { color: 'white', fontSize: 20 }
+  };
+  
+  constructor(props){
     super(props);
 
     this.state = {
