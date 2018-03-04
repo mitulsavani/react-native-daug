@@ -67,8 +67,6 @@ Social feed screen based on Facebook.
 <img src="screenshots/SignUp.png" width="250" />
 <img src="screenshots/SocialFeed.png" width="250" />
 <img src="screenshots/SocialFeed2.png" width="250" />
-</div>
-<div style={{display: flex; flex-direction: row}}>
 <img src="screenshots/Profile" width="250" />
 </div>
 
