@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, FlatList, Image, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, ScrollView, FlatList, Image, TouchableOpacity, NativeModules, Platform } from 'react-native';
 import ProfileScreen from './ProfileScreen';
 import { Icon } from 'react-native-elements';
 import {Font} from 'expo';
@@ -7,6 +7,7 @@ import { MaterialCommunityIcons, SimpleLineIcons, Entypo } from '@expo/vector-ic
 
 
 import {SOCIAL_FEED_MOCK_DATA} from '../utils/constant';
+const { StatusBarManager } = NativeModules;
 
 export default class SocialFeedScreen extends React.Component {
   constructor(props){
@@ -16,7 +17,8 @@ export default class SocialFeedScreen extends React.Component {
       screen: '',
       commented: false,
       liked: false,
-      fontLoaded:false
+      fontLoaded:false,
+      selectedIndex: -1,
     };
   }
 
@@ -29,39 +31,40 @@ export default class SocialFeedScreen extends React.Component {
     this.setState({ fontLoaded: true });
   }
 
-  renderPost(member){
+  renderPost = ({ item }) => {
+  //renderPost(item){
     const {liked, commented,screen} = this.state;
 
     return(
-      <View style = {styles.postContainer} key={member}>
-          <View style = {styles.postHeader} onPress={() => this.setState({ screen: 'ProfileScreen', selectedIndex: item.id })} >
-              <TouchableOpacity style = {styles.displayImageContainer} >
-                  <Image source={{ url: member.image }} style={styles.avatar} />              
+      <View style = {styles.postContainer}>
+          <View style = {styles.postHeader}>
+              <TouchableOpacity style = {styles.displayImageContainer} onPress={() => this.setState({ screen: 'ProfileScreen', selectedIndex: item.id })} >
+                  <Image source={{ url: item.image }} style={styles.avatar} />              
               </TouchableOpacity>
               
               <View style = {styles.nameAndImageContainer} >
                   <View style = {styles.avatarName} >
                       <Text style = {{fontSize: 17, fontFamily: 'ComfortaaBold'}}> 
-                        {member.name} 
+                        {item.name} 
                        </Text>
                   </View>
                   <View style = {styles.location} >
                       <Text style = {{ color: '#3B3C40', fontSize: 12, fontFamily: 'Comfortaa', fontStyle: 'italic' }}> 
-                        {member.location} 
+                        {item.location} 
                        </Text>
                   </View>
               </View>
           </View>
           <View style = {styles.postImageCaptionContainer} >
-              <Image source={{ url: member.post.image }} style={styles.postImage} resizeMode="cover" />
+              <Image source={{ url: item.post.image }} style={styles.postImage} resizeMode="cover" />
               <Text style = {{marginLeft: 10, marginTop: 10, fontFamily: 'Comfortaa'}}> 
-                  {member.post.caption}
+                  {item.post.caption}
               </Text>
           </View>
           
           <View style = {styles.postLogs} >
               <View style = {styles.postDate} >
-                  <Text style = {{fontSize: 11, color: '#4C4B4B', fontFamily: 'Comfortaa'}}> {member.post.date} </Text>
+                  <Text style = {{fontSize: 11, color: '#4C4B4B', fontFamily: 'Comfortaa'}}> {item.post.date} </Text>
               </View>
               <View style = {styles.postActionView} >
                   <Icon
@@ -85,24 +88,38 @@ export default class SocialFeedScreen extends React.Component {
   }
 
   render() {
+    const { screen, selectedIndex } = this.state;
+
+    if (screen === 'ProfileScreen' && selectedIndex !== -1) {
+      return <ProfileScreen index={selectedIndex} />;
+    }
+
     return (
-      <ScrollView>
-        {this.state.fontLoaded &&
-          <View style = {styles.mainContent} >
-              <FlatList style={styles.list} 
-                keyExtractor = {(item, index) => index}
-                extraData = {this.state}
-                data = {SOCIAL_FEED_MOCK_DATA}
-                renderItem = {({ item }) => this.renderPost(item)}
-              />
-          </View>
-        }
-      </ScrollView>
+      <SafeAreaView style={styles.safeArea}>
+        <ScrollView>
+          {this.state.fontLoaded &&
+            <View style = {styles.mainContent} >
+                <FlatList style={styles.list} 
+                  keyExtractor = {(item, index) => index}
+                  extraData = {this.state}
+                  data = {SOCIAL_FEED_MOCK_DATA}
+                  renderItem={this.renderPost}
+                  //renderItem = {({ item }) => this.renderPost(item)}
+                />
+            </View>
+          }
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    paddingTop: Platform.OS === 'ios' ? 0 : StatusBarManager.HEIGHT,
+  },
+
   mainContent:{
     flex: 1,
     justifyContent: 'center',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Button} from 'react-native';
-import {Font} from 'expo';
+import {Font, LinearGradient} from 'expo';
 import DAUG_LOGO from '../../assets/daugLogo.png';
 import {Comfortaa} from '../../assets/fonts/Comfortaa.ttf';
 
