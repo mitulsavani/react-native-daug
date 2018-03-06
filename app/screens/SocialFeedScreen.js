@@ -44,7 +44,7 @@ export default class SocialFeedScreen extends React.Component {
               
               <View style = {styles.nameAndImageContainer} >
                   <View style = {styles.avatarName} >
-                      <Text style = {{fontSize: 17, fontFamily: 'ComfortaaBold'}}> 
+                      <Text style = {{fontSize: 17, fontFamily: 'ComfortaaBold', }}> 
                         {item.name} 
                        </Text>
                   </View>
@@ -120,6 +120,10 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'ios' ? 0 : StatusBarManager.HEIGHT,
   },
 
+  list: {
+    backgroundColor: 'white'
+  },
+
   mainContent:{
     flex: 1,
     justifyContent: 'center',
@@ -147,6 +151,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
+    
   },
   nameAndImageContainer: {
     flex: 9,

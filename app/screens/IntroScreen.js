@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button} from 'react-native';
-import {Font, LinearGradient} from 'expo';
+import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import { Font, LinearGradient } from 'expo';
 import DAUG_LOGO from '../../assets/daugLogo.png';
-import {Comfortaa} from '../../assets/fonts/Comfortaa.ttf';
+import { Comfortaa } from '../../assets/fonts/Comfortaa.ttf';
 
 import LoginScreen from './LoginScreen'
 import SignUpScreen from './SignupScreen'
@@ -13,7 +13,7 @@ export default class IntroScreen extends React.Component {
     header: null
 
   };
-  
+
   constructor(props) {
     super(props);
 
@@ -23,10 +23,10 @@ export default class IntroScreen extends React.Component {
   }
 
 
-  LoginButtonPressed =()=> {
+  LoginButtonPressed = () => {
     this.setState({ screen: 'LoginScreen' })
   }
-  SignUpButtonContainer =()=> {
+  SignUpButtonContainer = () => {
     this.setState({ screen: 'SignUpScreen' })
   }
 
@@ -41,35 +41,35 @@ export default class IntroScreen extends React.Component {
 
     return (
       <LinearGradient
-        colors={['#4C3ADC', '#ff9068', '#F5C86D','#C83E70','#E93856', '#9B37CF', '#E5385B', '#E43E4B',  ]}
-        start={{x: 1.0, y: 0.0}}
-        end={{x:0.0, y:1.0}}
-        locations={[0.1,0.8]}
+        colors={['#4C3ADC', '#ff9068']}
+        start={{ x: 1.0, y: 0.0 }}
+        end={{ x: 0.0, y: 1.0 }}
+        locations={[0.1, 0.8]}
         style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image style={styles.dauglogo} source = {DAUG_LOGO} />
-         </View>
+          <Image style={styles.dauglogo} source={DAUG_LOGO} />
+        </View>
 
 
-         <LinearGradient
-        colors={[ 'grey', 'lightgrey' ]}
-        end={{x: 1.0, y: 0.0}}
-        start={{x:0.0, y:1.0}}
-        locations={[0.1,0.8]}
-         style={styles.joinus}>
+        <LinearGradient
+          colors={['#4C3ADC', '#ff9068']}
+          start={{ x: 1.0, y: 0.0 }}
+          end={{ x: 0.0, y: 1.0 }}
+          locations={[0.1, 0.8]}
+          style={styles.joinus}>
           <View style={styles.login}>
-          <Button 
-            title="Login"
-            color= 'black'
-            onPress={() => this.props.navigation.navigate('Login')}
-          />
+            <Button
+              title="Login"
+              color='black'
+              onPress={() => this.props.navigation.navigate('Login')}
+            />
           </View>
           <View style={styles.signup}>
-          <Button onPress={() => this.props.navigation.navigate('Signup')}
-            title="Sign Up"
-            color= 'black'
-            size = "30"
-          />
+            <Button onPress={() => this.props.navigation.navigate('Signup')}
+              title="Sign Up"
+              color='black'
+              size="30"
+            />
           </View>
         </LinearGradient>
       </LinearGradient>
@@ -111,9 +111,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   signup:
-  {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
+    {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+    }
 });
