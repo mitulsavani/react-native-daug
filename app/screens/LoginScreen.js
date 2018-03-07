@@ -57,8 +57,8 @@ export default class LoginScreen extends React.Component {
     return (
       <LinearGradient
         colors={['#4C3ADC', '#ff9068']}
-        start={{x: 1.0, y: 0.0}}
-        end={{x:0.0, y: 1.0}}
+        start={{ x: 0.5, y: 0.0 }}
+        end={{ x: 0.5, y: 1.0 }}
         locations={[0.1,0.8]}
         style={styles.mainContent}>
           <Input
