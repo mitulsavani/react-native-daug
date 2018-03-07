@@ -30,8 +30,8 @@ export default class SignupScreen extends React.Component {
 
   onSignUpButtonPressed = () => {
     const {screen, name, email, password} = this.state
-    //Display alert
-       if (name != '') {
+      //Display alert
+       if (name != '' && password !='' && email!= '') {
            Keyboard.dismiss
          console.log("Correct Phrase Entered")
          Alert.alert(

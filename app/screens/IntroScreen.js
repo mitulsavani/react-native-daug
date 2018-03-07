@@ -50,13 +50,7 @@ export default class IntroScreen extends React.Component {
           <Image style={styles.dauglogo} source={DAUG_LOGO} />
         </View>
 
-
-        <LinearGradient
-          colors={['#4C3ADC', '#ff9068']}
-          start={{ x: 1.0, y: 0.0 }}
-          end={{ x: 0.0, y: 1.0 }}
-          locations={[0.1, 0.8]}
-          style={styles.joinus}>
+        <View style={styles.joinus}>
           <View style={styles.login}>
             <Button
               title="Login"
@@ -67,11 +61,12 @@ export default class IntroScreen extends React.Component {
           <View style={styles.signup}>
             <Button onPress={() => this.props.navigation.navigate('Signup')}
               title="Sign Up"
+              
               color='black'
               size="30"
             />
           </View>
-        </LinearGradient>
+        </View>
       </LinearGradient>
     );
   }
