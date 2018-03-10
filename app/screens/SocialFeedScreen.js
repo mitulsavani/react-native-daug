@@ -33,7 +33,7 @@ export default class SocialFeedScreen extends React.Component {
 
   renderPost = ({ item }) => {
   //renderPost(item){
-    const {liked, commented,screen} = this.state;
+    const {liked, commented, screen} = this.state;
 
     return(
       <View style = {styles.postContainer}>
@@ -46,12 +46,12 @@ export default class SocialFeedScreen extends React.Component {
                   <View style = {styles.avatarName} >
                       <Text style = {{fontSize: 17, fontFamily: 'ComfortaaBold', }}> 
                         {item.name} 
-                       </Text>
+                      </Text>
                   </View>
                   <View style = {styles.location} >
                       <Text style = {{ color: '#3B3C40', fontSize: 12, fontFamily: 'Comfortaa', fontStyle: 'italic' }}> 
                         {item.location} 
-                       </Text>
+                      </Text>
                   </View>
               </View>
           </View>
