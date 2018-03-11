@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, ScrollView, FlatList, Image, TouchableOpacity, NativeModules, Platform } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, ScrollView, FlatList, Image, TouchableOpacity, NativeModules, Platform, TouchableHighlight } from 'react-native';
 import ProfileScreen from './ProfileScreen';
 import { Icon } from 'react-native-elements';
 import {Font} from 'expo';
@@ -32,7 +32,6 @@ export default class SocialFeedScreen extends React.Component {
   }
 
   renderPost = ({ item }) => {
-  //renderPost(item){
     const {liked, commented, screen} = this.state;
 
     return(
@@ -56,7 +55,9 @@ export default class SocialFeedScreen extends React.Component {
               </View>
           </View>
           <View style = {styles.postImageCaptionContainer} >
-              <Image source={{ url: item.post.image }} style={styles.postImage} resizeMode="cover" />
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('PostDetails')}>
+                <Image source={{ url: item.post.image }} style={styles.postImage} resizeMode="cover" />
+              </TouchableOpacity>
               <Text style = {{marginLeft: 10, marginTop: 10, fontFamily: 'Comfortaa'}}> 
                   {item.post.caption}
               </Text>
@@ -97,6 +98,19 @@ export default class SocialFeedScreen extends React.Component {
     return (
       <SafeAreaView style={styles.safeArea}>
         <ScrollView>
+        <View style={styles.createPostContainer}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('CreatePost')}>
+              <Text style={styles.createPostLabel}>Create Post</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('CreatePost')}>
+            <Icon
+                name='picture'
+                type='simple-line-icon'
+                size={20}
+                iconStyle={styles.photoPostIcon}
+              />
+            </TouchableOpacity>
+          </View>
           {this.state.fontLoaded &&
             <View style = {styles.mainContent} >
                 <FlatList style={styles.list} 
@@ -104,7 +118,6 @@ export default class SocialFeedScreen extends React.Component {
                   extraData = {this.state}
                   data = {SOCIAL_FEED_MOCK_DATA}
                   renderItem={this.renderPost}
-                  //renderItem = {({ item }) => this.renderPost(item)}
                 />
             </View>
           }
@@ -197,6 +210,30 @@ const styles = StyleSheet.create({
     color: '#44484B',
     fontSize: 15,
     fontFamily: 'Comfortaa'
+  },
+
+  createPostContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    height: 50,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#fcfcfd',
+    borderBottomWidth: 0.3,
+    borderBottomColor: '#aaaaaa',
+  },
+
+  createPostLabel:{
+    color: '#2F80ED',
+    fontSize: 17,
+    fontWeight: 'bold',
+    fontFamily: 'Arial',
+    marginLeft: 20,
+  },
+
+  photoPostIcon: {
+    marginRight: 20,
+    color: '#ff99cc',
   }
   
 });
