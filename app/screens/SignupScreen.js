@@ -24,38 +24,105 @@ export default class SignupScreen extends React.Component {
       screen: null,
       name: '',
       email: '',
-      password: ''
+      password: '',
+      isLoading: false
     };
   }
 
-  onSignUpButtonPressed = () => {
-    const {screen, name, email, password} = this.state
-      //Display alert
-       if (name != '' && password !='' && email!= '') {
-           Keyboard.dismiss
-         console.log("Correct Phrase Entered")
-         Alert.alert(
-             'Success!',
-           'Name: ' + name + '\nEmail: ' + email + '\nPassword ' + password,
-            [
-                {text: 'OK', onPress: () => this.props.navigation.navigate('Home')},
+  async signupButtonPressed() {
+    this.setState({ isLoading: true })
+
+    const { name, email, password } = this.state
+    const { navigate } = this.props.navigation
+
+    var details = {
+      'name': name,
+      'email': email,
+      'password': password
+    };
+
+    var formBody = [];
+
+    for (var property in details) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(details[property]);
+
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+
+    formBody = formBody.join("&");
+
+    try {
+      let response = await fetch(`https://daug-app.herokuapp.com/auth/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      });
+
+      let responseJSON = null
+
+      if (response.status === 201) {
+        responseJSON = await response.json();
+
+        console.log(responseJSON)
+
+        this.setState({ isLoading: false })
+        Alert.alert(
+          'Signed Up!',
+          'You have successfully signed up!',
+          [
+            { text: "Continue", onPress: () => navigate("Home") }
           ],
-            { cancelable: false }
+          { cancelable: false }
         )
-        
       } else {
-            Keyboard.dismiss
-          console.log("Incorrect Email Or Password Entered")
-          Alert.alert(
-              'Invalid',
-            'Please fill all the fields', 
-            [
-                {text: 'Try Again', onPress: () => this.props.navigation.navigate('Home')},
-          ],
-            { cancelable: false},
-        )
+        responseJSON = await response.json();
+        const error = responseJSON.message
+
+        console.log(responseJSON)
+
+        this.setState({ isLoading: false, errors: responseJSON.errors })
+        Alert.alert('Sign up failed!', `Unable to signup.. ${error}!`)
       }
+    } catch (error) {
+      this.setState({ isLoading: false, response: error })
+
+      console.log(error)
+
+      Alert.alert('Sign up failed!', 'Unable to Signup. Please try again later')
+    }
   }
+
+  // onSignUpButtonPressed = () => {
+  //   const {screen, name, email, password} = this.state
+  //     //Display alert
+  //     if (name != '' && password !='' && email!= '') {
+  //         Keyboard.dismiss
+  //       console.log("Correct Phrase Entered")
+  //       Alert.alert(
+  //           'Success!',
+  //         'Name: ' + name + '\nEmail: ' + email + '\nPassword ' + password,
+  //           [
+  //               {text: 'OK', onPress: () => this.props.navigation.navigate('Home')},
+  //         ],
+  //           { cancelable: false }
+  //       )
+        
+  //     } else {
+  //           Keyboard.dismiss
+  //         console.log("Incorrect Email Or Password Entered")
+  //         Alert.alert(
+  //             'Invalid',
+  //           'Please fill all the fields', 
+  //           [
+  //               {text: 'Try Again', onPress: () => this.props.navigation.navigate('Home')},
+  //         ],
+  //           { cancelable: false},
+  //       )
+  //     }
+  // }
 
   render() {
     const{ screen, name, email, password} = this.state;
@@ -85,6 +152,7 @@ export default class SignupScreen extends React.Component {
                       color = 'white'
                     />
                   }
+                  onChangeText={(name) => this.setState({name})}
             />
             <Input
                   placeholder = 'Email'
@@ -140,7 +208,7 @@ export default class SignupScreen extends React.Component {
                     color='white'
                   />
                 }
-                onPress = {() => this.onSignUpButtonPressed()}
+                onPress = {() => this.signupButtonPressed()}
               />
           </View>
         </LinearGradient>
