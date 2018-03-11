@@ -8,16 +8,19 @@ import IntroScreen from './app/screens/IntroScreen';
 import ProfileScreen from './app/screens/ProfileScreen';
 import SignupScreen from './app/screens/SignupScreen';
 import SocialFeedScreen from './app/screens/SocialFeedScreen';
+import CreatePost from './app/screens/CreatePost';
+import EditProfile from './app/screens/EditProfile';
 
 import RootNavigator from './app/navigation/RootNavigator'
-import CreatePost from './app/screens/CreatePost';
+
+
 
 export default class App extends React.Component {
 
   render() 
   {
       return (
-        <CreatePost/>
+        <EditProfile/>
       )
   }
 }

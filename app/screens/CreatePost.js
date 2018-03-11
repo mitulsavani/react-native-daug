@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
 import Rocco_DisplayPic from '../../assets/Rocco_displayPic.jpg';
-import { SimpleLineIcons } from '@expo/vector-icons';
+import { SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default class CreatePost extends React.Component {
 render() {
@@ -13,7 +13,7 @@ render() {
                 </View>
                 <View style = {styles.authorInfo}>
                     <View style = {styles.authorName}>
-                        <Text style = {{fontSize: 20, color: '#4045A8', fontWeight: 'bold'  }}> 
+                        <Text style = {{fontSize: 20, color: '#4045A8', fontWeight: 'bold', fontFamily: 'Futura'  }}> 
                             Rocco
                         </Text>
                     </View>
@@ -33,7 +33,7 @@ render() {
                     style={styles.content}
                     multiline
                     placeholder="What's on your mind?"
-                    placeholderTextColor="#DDD"
+                    placeholderTextColor="grey"
                     underlineColorAndroid="rgba(0,0,0,0)"
                 />
             </View>
@@ -53,8 +53,8 @@ container: {
 infoContainer: {
     flex: 1,
     backgroundColor: '#EFEFF5', 
-    flexDirection: 'row'
-
+    flexDirection: 'row',
+    marginTop: 30
 },
 
 postPara: {
@@ -82,7 +82,6 @@ authorName: {
 },
 location : {
     flex: 1,
-    //flexDirection: 'row',
     marginLeft: 10,
     justifyContent: 'center'
 },
@@ -93,12 +92,15 @@ locationContainer: {
 locationName: {
     marginLeft: 4,
     fontSize: 13,
+    fontFamily: 'Futura'
 },
 content: {
     marginLeft: 12,
     marginRight: 12,
+    marginTop: 12,
     fontWeight: 'bold',
     fontSize: 24,
+    fontFamily: 'Futura'
 }
 
 });
