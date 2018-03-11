@@ -9,7 +9,18 @@ import { MaterialCommunityIcons, SimpleLineIcons, Entypo } from '@expo/vector-ic
 import {SOCIAL_FEED_MOCK_DATA} from '../utils/constant';
 const { StatusBarManager } = NativeModules;
 
-export default class SocialFeedScreen extends React.Component {
+export default class SocialFeedScreen extends React.Component { 
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Daug',
+    headerTintColor: '#2F80ED',
+    headerTitleStyle: {
+      fontSize: 20,
+      fontWeight: 'bold',
+    },
+    headerStyle: { backgroundColor: '#FAFAFA', borderBottomWidth: 0.5, borderBottomColor: '#aaaaaa',},
+  });
+  
+  
   constructor(props){
     super(props);
 

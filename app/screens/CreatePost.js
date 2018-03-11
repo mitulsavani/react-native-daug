@@ -1,12 +1,25 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
-import Rocco_DisplayPic from '../../assets/Rocco_displayPic.jpg';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput,Alert } from 'react-native';
+import { Header } from 'react-native-elements';
 import { SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
+import Rocco_DisplayPic from '../../assets/Rocco_displayPic.jpg';
+
 export default class CreatePost extends React.Component {
+
+constructor(props) {
+    super(props);
+
+    
+
+    this.state = {
+        newPostContent: ''
+    };
+}
 render() {
+
     return (
-        <View style={styles.container}>
+    <View style={styles.container}>
             <View style = {styles.infoContainer}>
                 <View style = {styles.authorpicture}>
                     <Image style={styles.roccoDisplayPic} source = {Rocco_DisplayPic} />

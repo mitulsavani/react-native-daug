@@ -12,7 +12,6 @@ CreatePost: {
 }, {
 initialRouteName: 'SocialStack',
 mode: 'modal',
-headerMode: 'none',
 navigationOptions: {
     gesturesEnabled: false,
 },

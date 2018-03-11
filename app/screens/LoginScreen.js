@@ -64,7 +64,7 @@ export default class LoginScreen extends React.Component {
           <Input
                 placeholder = 'Email'
                 //TODO: Font probably goes down here
-                 inputStyle = {{ color: 'white' }}
+                inputStyle = {{ color: 'white' }}
                 autoCapitalize = "none"
                 autoCorrect = {false}
                 keyboardType = "email-address"
