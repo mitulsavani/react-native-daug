@@ -3,7 +3,7 @@ import IntroScreen from '../screens/IntroScreen';
 import SignupScreen from '../screens/SignupScreen';
 import LoginScreen from '../screens/LoginScreen';
 
-export default StackNavigator ({
+const IntroStack = StackNavigator ({
 
     Intro:
     {
@@ -19,3 +19,5 @@ export default StackNavigator ({
     }
 
 });
+
+export default IntroStack;

@@ -9,6 +9,19 @@ import Rocco_DisplayPic from '../../assets/Rocco_displayPic.jpg';
 import IntroScreen from './IntroScreen'
 
 export default class ProfileScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerVisible: navigation.state.params ? navigation.state.params.isHeaderShow : false,
+      title: 'EditProfile',
+      headerTintColor: '#2F80ED',
+      headerTitleStyle: {
+        fontSize: 20,
+      },
+      headerStyle: {
+        backgroundColor: '#FAFAFA',
+      },
+    }
+  }
   constructor(props) {
     super(props);
 
@@ -17,6 +30,7 @@ export default class ProfileScreen extends React.Component {
       screen: 'null'
     };
   }
+
 
   async componentDidMount() {
     await Font.loadAsync({
@@ -33,6 +47,7 @@ export default class ProfileScreen extends React.Component {
 
   render() {
     const { screen } = this.state
+    const { navigate } = this.props.navigation
 
     if (screen === 'IntroScreen') {
       return <IntroScreen />; }
@@ -96,7 +111,7 @@ export default class ProfileScreen extends React.Component {
                                         color='black'
                                       />
                                     }
-                                    onPress = {() => this.editProfilePressed()}
+                                    onPress = {() => this.props.navigation.navigate('EditProfile')}
                                   />
                               </View>
                         </View>

@@ -66,7 +66,7 @@ render() {
                 <Text style={{color: '#737373', marginLeft: 5}}>Personal Information</Text>
             </View>
             <View style={styles.emailContainer}>
-            <Text style={{color: '#737373'}}>Bio</Text>
+            <Text style={{color: '#737373'}}>Email</Text>
                 <Input
                     placeHolder = 'Tell me more about you'
                     placeHolderTextColor = 'black'
@@ -146,7 +146,4 @@ inputElementsContainer: {
     width: '100%',
     borderColor: '#aaaaaa',
 },
-
-
-
 });

@@ -10,17 +10,15 @@ import SignupScreen from './app/screens/SignupScreen';
 import SocialFeedScreen from './app/screens/SocialFeedScreen';
 import CreatePost from './app/screens/CreatePost';
 import EditProfile from './app/screens/EditProfile';
-
+import PostDetails from './app/screens/PostDetails';
 import RootNavigator from './app/navigation/RootNavigator'
-
-
 
 export default class App extends React.Component {
 
   render() 
   {
       return (
-        <EditProfile/>
+        <RootNavigator/>
       )
   }
 }
