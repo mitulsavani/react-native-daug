@@ -19,41 +19,83 @@ export default class LoginScreen extends React.Component {
     super(props);
 
     this.state = {
-      screen: null,
+      //screen: null,
       email: '',
-      password: '' 
+      password: '',
+      isLoading: false
     };
   }
 
-  onSubmitButtonPressed = () => {
-    const { screen,email, password } = this.state
-    if (email !== '' && password !== '') {
-      Keyboard.dismiss();
-    
-      if (email === 'mitul@gmail.com' && password === 'savani') {
+  async loginButtonPressed() {
+    this.setState({ isLoading: true })
+
+    const { email, password } = this.state
+    const { navigate } = this.props.navigation
+
+    var details = {
+      'email': email,
+      'password': password
+    };
+
+    var formBody = [];
+
+    for (var property in details) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(details[property]);
+
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+
+    formBody = formBody.join("&");
+
+    try {
+      let response = await fetch(`https://daug-app.herokuapp.com/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      });
+
+      let responseJSON = null
+
+      if (response.status === 201) {
+        responseJSON = await response.json();
+
+        console.log(responseJSON)
+
+        this.setState({ isLoading: false })
         Alert.alert(
-          'Success',
-          'Email: mitul@gmail.com\nPassword is "savani"',
-        );
-        this.props.navigation.navigate('Home')
+          'Login',
+          'You have successfully Loged-In',
+          [
+            { text: "Continue", onPress: () => navigate("Home") }
+          ],
+          { cancelable: false }
+        )
       } else {
-        Alert.alert(
-          'Failure',
-          'Email is mitul@gmail.com, and password is "savani".',
-        );
+        responseJSON = await response.json();
+        const error = responseJSON.message
+
+        console.log(responseJSON)
+
+        this.setState({ isLoading: false, errors: responseJSON.errors })
+        Alert.alert('Login failed!', `Unable to Login.. ${error}!`)
       }
+    } catch (error) {
+      this.setState({ isLoading: false, response: error })
+
+      console.log(error)
+
+      Alert.alert('Sign up failed!', 'Unable to Login. Please try again later')
     }
   }
 
 
 
   render() {
-    const{ screen, email, password} = this.state;
+    const{ email, password} = this.state;
 
-    if(screen === 'SocialFeedScreen')
-    {
-      return <SocialFeedScreen/>;
-    }
     return (
       <LinearGradient
         colors={['#4C3ADC', '#ff9068']}
@@ -116,7 +158,7 @@ export default class LoginScreen extends React.Component {
                   color='white'
                 />
               }
-              onPress = {() => this.onSubmitButtonPressed(email,password)}
+              onPress = {() => this.loginButtonPressed()}
             />
         </View>
 

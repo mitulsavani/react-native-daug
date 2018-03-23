@@ -11,15 +11,10 @@ export default class IntroScreen extends React.Component {
   static navigationOptions = {
     title: "",
     header: null
-
   };
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      screen: null
-    };
   }
 
   async componentDidMount() {
@@ -51,13 +46,6 @@ export default class IntroScreen extends React.Component {
  
 
   render() {
-    const { screen } = this.state
-
-    if (screen === 'LoginScreen') {
-      return <LoginScreen />;
-    } else if (screen === 'SignUpScreen') {
-      return <SignUpScreen />;
-    }
 
     return (
       <LinearGradient

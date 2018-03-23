@@ -21,7 +21,6 @@ export default class SignupScreen extends React.Component {
     super(props)
 
     this.state = {
-      screen: null,
       name: '',
       email: '',
       password: '',
@@ -95,42 +94,9 @@ export default class SignupScreen extends React.Component {
     }
   }
 
-  // onSignUpButtonPressed = () => {
-  //   const {screen, name, email, password} = this.state
-  //     //Display alert
-  //     if (name != '' && password !='' && email!= '') {
-  //         Keyboard.dismiss
-  //       console.log("Correct Phrase Entered")
-  //       Alert.alert(
-  //           'Success!',
-  //         'Name: ' + name + '\nEmail: ' + email + '\nPassword ' + password,
-  //           [
-  //               {text: 'OK', onPress: () => this.props.navigation.navigate('Home')},
-  //         ],
-  //           { cancelable: false }
-  //       )
-        
-  //     } else {
-  //           Keyboard.dismiss
-  //         console.log("Incorrect Email Or Password Entered")
-  //         Alert.alert(
-  //             'Invalid',
-  //           'Please fill all the fields', 
-  //           [
-  //               {text: 'Try Again', onPress: () => this.props.navigation.navigate('Home')},
-  //         ],
-  //           { cancelable: false},
-  //       )
-  //     }
-  // }
-
   render() {
-    const{ screen, name, email, password} = this.state;
+    const{ name, email, password} = this.state;
 
-    if(screen === 'IntroScreen')
-    {
-      return (<IntroScreen/>);
-    }
     return (
       <LinearGradient
         colors={['#4C3ADC', '#ff9068' ]}

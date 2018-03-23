@@ -83,6 +83,7 @@ render() {
     return (
     <View style={styles.container}>
         <Header
+            placement = 'center'
             leftComponent = {
                 <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                     <Text style = {styles.headerButton} > Cancel </Text>
@@ -101,6 +102,7 @@ render() {
                 </TouchableOpacity>
             }
             outerContainerStyles={{ backgroundColor: '#FAFAFA' }}
+            
         />
             <View style = {styles.infoContainer}>
                 <View style = {styles.authorpicture}>
