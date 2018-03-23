@@ -100,7 +100,7 @@ export default class LoginScreen extends React.Component {
           />
         <View style={styles.ButtonContainer}>
             <Button
-              text='Login'
+              title='Login'
               buttonStyle={{
                 backgroundColor: '#3B8AB8',
                 width: 200,

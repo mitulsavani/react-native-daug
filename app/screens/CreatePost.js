@@ -6,13 +6,6 @@ import { SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Rocco_DisplayPic from '../../assets/Rocco_displayPic.jpg';
 
 export default class CreatePost extends React.Component {
-static navigationOptions = {
-    title: "CreatePost",
-    headerBackTitle: 'cancel',
-    headerStyle: {backgroundColor: '#4C3ADC', borderBottomWidth: 0},
-    headerTintColor: 'white',
-    headerTitleStyle: { color: 'white', fontSize: 20 }
-    };
 
 constructor(props) {
     super(props);
@@ -89,6 +82,26 @@ render() {
     const{newPostContent} = this.state
     return (
     <View style={styles.container}>
+        <Header
+            leftComponent = {
+                <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                    <Text style = {styles.headerButton} > Cancel </Text>
+                </TouchableOpacity>
+            }
+            centerComponent = {{
+                text: 'Create Post',
+                style: {
+                color: '#C83E70', fontSize: 20,
+                fontWeight: 'bold',
+                }
+            }}   
+            rightComponent = {
+                <TouchableOpacity onPress={() => this.sharePressed()}>
+                    <Text style = {styles.headerButton} > Share </Text>
+                </TouchableOpacity>
+            }
+            outerContainerStyles={{ backgroundColor: '#FAFAFA' }}
+        />
             <View style = {styles.infoContainer}>
                 <View style = {styles.authorpicture}>
                     <Image style={styles.roccoDisplayPic} source = {Rocco_DisplayPic} />
@@ -120,27 +133,6 @@ render() {
                     onChangeText={(newPostContent) => this.setState({newPostContent})}
                 />
             </View>
-            <View style={styles.ButtonContainer}>
-                <Button
-                text='Share'
-                buttonStyle={{
-                    backgroundColor: '#3B8AB8',
-                    width: 200,
-                    height: 45,
-                    borderColor: "transparent",
-                    borderWidth: 0,
-                    borderRadius: 5
-                }}
-                icon={
-                    <MaterialCommunityIcons
-                    name='logout'
-                    size={24}
-                    color='white'
-                    />
-                }
-                onPress = {() => this.sharePressed()}
-                />
-            </View>
         </View>
     );
 }
@@ -148,21 +140,20 @@ render() {
 
 const styles = StyleSheet.create({
 container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    //flex: 1,
     justifyContent: 'center',
     marginTop: 30
 },
 
 infoContainer: {
-    flex: 1,
+    height: 80,
     backgroundColor: '#EFEFF5', 
     flexDirection: 'row',
     marginTop: 30
 },
 
 postPara: {
-    flex: 9,
+    height: 300,
     backgroundColor: 'white',
 
 },
@@ -205,6 +196,11 @@ content: {
     fontWeight: 'bold',
     fontSize: 24,
     fontFamily: 'Futura'
+},
+headerButton: {
+    color: '#C83E70',
+    fontSize: 20,
+    fontWeight: 'bold',
 }
 
 });

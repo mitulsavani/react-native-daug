@@ -3,19 +3,20 @@ import CreatePostScreen from '../screens/CreatePost';
 import SocialStack from './SocialStack';
 
 const SocialNavigator = StackNavigator({
-SocialStack: {
-    screen: SocialStack,
-},
-CreatePost: {
-    screen: CreatePostScreen,
-},
-}, {
-initialRouteName: 'SocialStack',
-mode: 'modal',
-headerMode: 'none',
-navigationOptions: {
-    gesturesEnabled: false,
-},
+    SocialStack: {
+        screen: SocialStack,
+    },
+    CreatePost: {
+        screen: CreatePostScreen,
+    },
+}, 
+{
+    initialRouteName: 'SocialStack',
+    mode: 'modal',
+    headerMode: 'none',
+    navigationOptions: {
+        gesturesEnabled: false,
+    },
 });
 
 export default SocialNavigator;

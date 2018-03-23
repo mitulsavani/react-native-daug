@@ -192,7 +192,7 @@ export default class SignupScreen extends React.Component {
             />
           <View style={styles.ButtonContainer}>
               <Button
-                text='Sign Up'
+                title='Sign Up'
                 buttonStyle={{
                   backgroundColor: '#3B8AB8',
                   width: 200,
