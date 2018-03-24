@@ -136,7 +136,7 @@ Social feed screen based on Facebook.
 - [ ] :star: **Bonus:** Use `ActivityIndicator` to show placeholder loading when fetching feed data
 - [ ] :star: **Bonus:** Use `DeviceEventEmitter` to trigger fetching posts when the `new_post_created` event is emitted
 - [ ] :star: **Bonus:** Use `timeSince()` utility function to show relative times for post creation
-- [ ] Create Post Screen - Make **`POST`** request to **`/api/users/:userId/posts`** to create a new post by the user
+- [x ] Create Post Screen - Make **`POST`** request to **`/api/users/:userId/posts`** to create a new post by the user
 - [ ] :star: **Bonus:** Use `DeviceEventEmitter` to emit `new_post_created` event once post is created
 - [ ] Profile Screen - Make **`GET`** request to **`/api/users/:userId`** to get all the profile data
 - [ ] :star: **Bonus:** Use `ActivityIndicator` to show placeholder loading when fetching profile data

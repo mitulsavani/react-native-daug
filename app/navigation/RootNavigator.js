@@ -17,7 +17,7 @@ export default StackNavigator ({
         },
     },
     {
-        initialRouteName: 'Intro',
+        initialRouteName: 'Home',
         mode: 'modal',
         headerMode: 'none'
     });
