@@ -12,7 +12,7 @@ const { StatusBarManager } = NativeModules;
 export default class SocialFeedScreen extends React.Component { 
   static navigationOptions = ({ navigation }) => ({
     title: 'Daug',
-    headerTintColor: '#2F80ED',
+    headerTintColor: '#C83E70',
     headerTitleStyle: {
       fontSize: 20,
       fontWeight: 'bold',

@@ -12,8 +12,8 @@ export default class ProfileScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       headerVisible: navigation.state.params ? navigation.state.params.isHeaderShow : false,
-      title: 'EditProfile',
-      headerTintColor: '#2F80ED',
+      title: 'Profile',
+      headerTintColor: '#C83E70',
       headerTitleStyle: {
         fontSize: 20,
       },
@@ -48,9 +48,6 @@ export default class ProfileScreen extends React.Component {
   render() {
     const { screen } = this.state
     const { navigate } = this.props.navigation
-
-    if (screen === 'IntroScreen') {
-      return <IntroScreen />; }
 
     return (
       <View style={styles.mainContainer}>
@@ -94,8 +91,8 @@ export default class ProfileScreen extends React.Component {
                         <View style = { styles.editProfileContainer} >
                               <View style={styles.editButton}>
                                   <Button
-                                    text='Edit Profile'
-                                    textStyle={{ fontSize: 12, color: 'black'}}
+                                    title='Edit'
+                                    textStyle={{ fontSize: 10, color: 'black'}}
                                     buttonStyle={{
                                       backgroundColor: 'white',
                                       width: 100,
@@ -134,7 +131,7 @@ export default class ProfileScreen extends React.Component {
           <View style={styles.logOutContainer}>
                 <View style={styles.ButtonContainer}>
                   <Button
-                    text='LOGOUT'
+                    title='LOGOUT'
                     buttonStyle={{
                       backgroundColor: '#3B8AB8',
                       width: 200,
