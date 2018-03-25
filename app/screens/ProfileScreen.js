@@ -27,44 +27,139 @@ export default class ProfileScreen extends React.Component {
 
     this.state = {
       fontLoaded: false,
-      screen: 'null'
+      isProfileLoading: false,
+      profile: null,
+      user: 6
     };
   }
 
 
-  async componentDidMount() {
-    await Font.loadAsync({
-      'Comfortaa': require('../../assets/fonts/Comfortaa.ttf'),
-      'ComfortaaBold': require('../../assets/fonts/ComfortaaBold.ttf')
-    });
+  // async componentDidMount() {
+  //   await Font.loadAsync({
+  //     'Comfortaa': require('../../assets/fonts/Comfortaa.ttf'),
+  //     'ComfortaaBold': require('../../assets/fonts/ComfortaaBold.ttf')
+  //   });
 
-    this.setState({ fontLoaded: true });
+  //   this.setState({ fontLoaded: true });
+
+  //   this.fetchUser()
+  // }
+
+  componentDidMount(){
+    this.fetchUser()
   }
 
-  editProfilePressed =() => {
-    //Here will the more info of my Rocco
+  async fetchUser() {
+
+    try {
+      let response = await fetch(`https://daug-app.herokuapp.com/api/users/9`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+      });
+
+      let responseJSON = null
+      
+      if (response.status === 200) {
+
+        responseJSON = await response.json();
+        console.log(responseJSON)
+        this.setState({
+          isProfileLoading: false,
+          profile: responseJSON,
+        })
+      }
+      else {
+        responseJSON = await response.json();
+        const error = responseJSON.message
+
+        console.log(responseJSON)
+
+        this.setState({ errors: responseJSON.errors })
+        Alert.alert('Unable to get your profile info', `Reason.. ${error}!`)
+      }
+    } catch (error) {
+      this.setState({ isProfileLoading: false, response: error })
+
+      console.log(error)
+
+      Alert.alert('Unable to get the profile info. Please try again later')
+    }
   }
+
+  _renderProfileBanner(image) {
+    if(image) {
+      return (
+        <Image 
+          style = {styles.coverImage}
+          source = {{ uri: image }}
+        />
+      )
+    }
+    else {
+      return (
+        <View
+          style = {styles.defaultCoverImage}
+        />
+      )
+    }
+  }
+
+  _renderProfileImage(image) {
+    if(image) {
+      return (
+        <Image
+        style={styles.displayPic}
+        source={{ uri: image }}
+      />      
+      )
+    }
+  }
+
+  _renderProfileName(name) {
+    if(name) {
+      return (
+        <Text style = {{fontSize: 25, fontWeight: 'bold'}}>
+          {name}
+        </Text>
+      )
+    }
+  }
+
+  _renderProfileBio(bio) {
+    if(bio) {
+      return (
+        <Text style = {{fontSize: 15, fontStyle: 'italic'}}>
+          {bio}
+        </Text>
+      )
+    }
+  }
+
 
   render() {
-    const { screen } = this.state
-    const { navigate } = this.props.navigation
+    const { isProfileLoading, profile, user } = this.state;
 
     return (
+    
+    <ScrollView style = {{backgroundColor: '#fff'}} >
+    {!isProfileLoading &&
       <View style={styles.mainContainer}>
-          <View style={styles.daugCoverPic}>
-              <Image style={styles.daugcover} source = {Rocco_Cover} />
+          <View style={styles.userCoverPic}>
+            {this._renderProfileBanner(profile && profile.banner_image)}
           </View>
 
           <View style={styles.infoContainer}>
               <View style={styles.logs}>
-                  <View style = { styles.displayPic } >
-                      <Image style={styles.roccoDisplayPic} source = {Rocco_DisplayPic} />
+                  <View style = { styles.displayPicContainer } >
+                      {this._renderProfileImage(profile && profile.profile_image)}
                   </View>
                   <View style = { styles.activityContainer } > 
                         <View style = { styles.postAndFollowContainer} >
                             <View style = {styles.posts} >
                                 <Text style = {{fontWeight: 'bold'}}> 
-                                    3 
+                                    {profile && profile.posts.length}
                                 </Text>
                                 <Text style = {{fontWeight: 'bold'}}>
                                     Post 
@@ -92,7 +187,7 @@ export default class ProfileScreen extends React.Component {
                               <View style={styles.editButton}>
                                   <Button
                                     title='Edit'
-                                    textStyle={{ fontSize: 10, color: 'black'}}
+                                    titleStyle={{ fontSize: 13, color: 'black'}}
                                     buttonStyle={{
                                       backgroundColor: 'white',
                                       width: 100,
@@ -116,20 +211,16 @@ export default class ProfileScreen extends React.Component {
               </View>
               <View style = { styles.bioData } >
                   <View style = { styles.name } >
-                          <Text style = {{fontSize: 25, fontWeight: 'bold'}}>
-                              Rocco
-                          </Text>
+                      {this._renderProfileName(profile && profile.name)}
                   </View>
                   <View style = { styles.status } >
-                          <Text style = {{fontSize: 15, fontStyle: 'italic'}}>
-                              I am small, inconent, and lovable dog 🐶
-                          </Text>
+                      {this._renderProfileBio(profile && profile.bio)}
                   </View>
               </View>
           </View>
 
           <View style={styles.logOutContainer}>
-                <View style={styles.ButtonContainer}>
+                
                   <Button
                     title='LOGOUT'
                     buttonStyle={{
@@ -149,10 +240,12 @@ export default class ProfileScreen extends React.Component {
                     }
                     onPress = {() => this.props.navigation.navigate('Intro')}
                   />
-              </View>
+              
           </View>
 
       </View>
+    }
+    </ScrollView>
     );
   }
 }
@@ -163,7 +256,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  daugCoverPic: {
+  userCoverPic: {
     flex: 1,
     backgroundColor: 'black',
     alignItems: 'center',
@@ -177,10 +270,9 @@ const styles = StyleSheet.create({
   },
 
   logOutContainer: {
-    flex: 3,
-    backgroundColor: 'white',
+    height: 320,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   logs: {
     flex: 2,
@@ -193,7 +285,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#aaaaaa'
   },
-  displayPic: {
+  displayPicContainer: {
     flex: 1,
     backgroundColor: 'white',
     alignItems: 'center',
@@ -210,17 +302,15 @@ const styles = StyleSheet.create({
   },
   name: {
     flex: 1.5,
-    backgroundColor: 'white',
     marginLeft: 15,
     justifyContent: 'center'
   },
   status: {
     flex: 1,
-    backgroundColor: 'white',
     justifyContent: 'center',
     marginLeft: 15
   },
-  roccoDisplayPic: {
+  displayPic: {
     height:80,
     width: 80,
     borderRadius: 40,
@@ -254,5 +344,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  coverImage: {
+    height: 200,
+    width: '100%'
+  },
+  defaultCoverImage: {
+    height: 200,
+    width: '100%',
+    backgroundColor: '#e1e8f2'
   }
 });
