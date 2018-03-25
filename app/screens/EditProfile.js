@@ -7,8 +7,6 @@ export default class EditProfile extends React.Component {
     constructor(props) {
         super(props)
 
-        
-
         this.state = {
             isLoading: false,
             name: '',
@@ -57,7 +55,7 @@ export default class EditProfile extends React.Component {
                 console.log(responseJSON)
 
                 this.setState({ isLoading: false })
-                
+
                 Alert.alert(
                     'Success!',
                     'Your profile is updated!',
@@ -113,8 +111,8 @@ export default class EditProfile extends React.Component {
                     />
                 </SafeAreaView>
                 <View style={styles.imageContainer}>
-                    <Image 
-                        style={styles.roccoDisplayPic} 
+                    <Image
+                        style={styles.roccoDisplayPic}
                         source={Rocco_DisplayPic}
                         resizeMode='cover'
                     />
@@ -127,7 +125,7 @@ export default class EditProfile extends React.Component {
                 <View style={styles.nameContainer}>
                     <Text style={{ color: '#737373' }}>Name</Text>
                     <Input
-                        placeHolder= {this.state.name}
+                        placeHolder={this.state.name}
                         placeHolderTextColor='blace'
                         style={styles.inputStyle}
                         autoCapitalize="none"

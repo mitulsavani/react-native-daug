@@ -45,7 +45,7 @@ export default class ProfileScreen extends React.Component {
     this.fetchUser()
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.fetchUser()
   }
 
@@ -60,7 +60,7 @@ export default class ProfileScreen extends React.Component {
       });
 
       let responseJSON = null
-      
+
       if (response.status === 200) {
 
         responseJSON = await response.json();
@@ -89,38 +89,38 @@ export default class ProfileScreen extends React.Component {
   }
 
   _renderProfileBanner(image) {
-    if(image) {
+    if (image) {
       return (
-        <Image 
-          style = {styles.coverImage}
-          source = {{ uri: image }}
+        <Image
+          style={styles.coverImage}
+          source={{ uri: image }}
         />
       )
     }
     else {
       return (
         <View
-          style = {styles.defaultCoverImage}
+          style={styles.defaultCoverImage}
         />
       )
     }
   }
 
   _renderProfileImage(image) {
-    if(image) {
+    if (image) {
       return (
         <Image
-        style={styles.displayPic}
-        source={{ uri: image }}
-      />      
+          style={styles.displayPic}
+          source={{ uri: image }}
+        />
       )
     }
   }
 
   _renderProfileName(name) {
-    if(name) {
+    if (name) {
       return (
-        <Text style = {{fontSize: 25, fontWeight: 'bold'}}>
+        <Text style={{ fontSize: 25, fontWeight: 'bold' }}>
           {name}
         </Text>
       )
@@ -128,9 +128,9 @@ export default class ProfileScreen extends React.Component {
   }
 
   _renderProfileBio(bio) {
-    if(bio) {
+    if (bio) {
       return (
-        <Text style = {{fontSize: 15, fontStyle: 'italic'}}>
+        <Text style={{ fontSize: 15, fontStyle: 'italic' }}>
           {bio}
         </Text>
       )
@@ -142,110 +142,110 @@ export default class ProfileScreen extends React.Component {
     const { isProfileLoading, profile, user } = this.state;
 
     return (
-    
-    <ScrollView style = {{backgroundColor: '#fff'}} >
-    { !isProfileLoading &&
-      <View style={styles.mainContainer}>
-          <View style={styles.userCoverPic}>
-            {this._renderProfileBanner(profile && profile.banner_image)}
-          </View>
 
-          <View style={styles.infoContainer}>
+      <ScrollView style={{ backgroundColor: '#fff' }} >
+        {!isProfileLoading &&
+          <View style={styles.mainContainer}>
+            <View style={styles.userCoverPic}>
+              {this._renderProfileBanner(profile && profile.banner_image)}
+            </View>
+
+            <View style={styles.infoContainer}>
               <View style={styles.logs}>
-                  <View style = { styles.displayPicContainer } >
-                      {this._renderProfileImage(profile && profile.profile_image)}
+                <View style={styles.displayPicContainer} >
+                  {this._renderProfileImage(profile && profile.profile_image)}
+                </View>
+                <View style={styles.activityContainer} >
+                  <View style={styles.postAndFollowContainer} >
+                    <View style={styles.posts} >
+                      <Text style={{ fontWeight: 'bold' }}>
+                        {profile && profile.posts.length}
+                      </Text>
+                      <Text style={{ fontWeight: 'bold' }}>
+                        Post
+                                </Text>
+                    </View>
+                    <View style={styles.followers} >
+                      <Text style={{ fontWeight: 'bold' }}>
+                        501
+                                </Text>
+                      <Text style={{ fontWeight: 'bold' }}>
+                        Followers
+                                </Text>
+                    </View>
+                    <View style={styles.following} >
+                      <Text style={{ fontWeight: 'bold' }}>
+                        99
+                                </Text>
+                      <Text style={{ fontWeight: 'bold' }}>
+                        Following
+                                </Text>
+                    </View>
                   </View>
-                  <View style = { styles.activityContainer } > 
-                        <View style = { styles.postAndFollowContainer} >
-                            <View style = {styles.posts} >
-                                <Text style = {{fontWeight: 'bold'}}> 
-                                    {profile && profile.posts.length}
-                                </Text>
-                                <Text style = {{fontWeight: 'bold'}}>
-                                    Post 
-                                </Text>
-                            </View>
-                            <View style = {styles.followers} >
-                                <Text style = {{fontWeight: 'bold'}}> 
-                                    501 
-                                </Text>
-                                <Text style = {{fontWeight: 'bold'}}> 
-                                    Followers 
-                                </Text>
-                            </View>
-                            <View style = {styles.following} >
-                                <Text style = {{fontWeight: 'bold'}}> 
-                                    99 
-                                </Text>
-                                <Text style = {{fontWeight: 'bold'}}> 
-                                    Following 
-                                </Text>
-                            </View>
-                        </View>
 
-                        <View style = { styles.editProfileContainer} >
-                              <View style={styles.editButton}>
-                                  <Button
-                                    title='Edit'
-                                    titleStyle={{ fontSize: 13, color: 'black'}}
-                                    buttonStyle={{
-                                      backgroundColor: 'white',
-                                      width: 100,
-                                      height: 20,
-                                      borderColor: 'black',
-                                      borderWidth: 1,
-                                      borderRadius: 5
-                                    }}
-                                    icon={
-                                      <MaterialCommunityIcons
-                                        name='account-edit'
-                                        size={20}
-                                        color='black'
-                                      />
-                                    }
-                                    onPress = {() => this.props.navigation.navigate('EditProfile')}
-                                  />
-                              </View>
-                        </View>
-                  </View>
-              </View>
-              <View style = { styles.bioData } >
-                  <View style = { styles.name } >
-                      {this._renderProfileName(profile && profile.name)}
-                  </View>
-                  <View style = { styles.status } >
-                      {this._renderProfileBio(profile && profile.bio)}
-                  </View>
-              </View>
-          </View>
-
-          <View style={styles.logOutContainer}>
-                
-                  <Button
-                    title='LOGOUT'
-                    buttonStyle={{
-                      backgroundColor: '#3B8AB8',
-                      width: 200,
-                      height: 45,
-                      borderColor: "transparent",
-                      borderWidth: 0,
-                      borderRadius: 5
-                    }}
-                    icon={
-                      <MaterialCommunityIcons
-                        name='logout'
-                        size={24}
-                        color='white'
+                  <View style={styles.editProfileContainer} >
+                    <View style={styles.editButton}>
+                      <Button
+                        title='Edit'
+                        titleStyle={{ fontSize: 13, color: 'black' }}
+                        buttonStyle={{
+                          backgroundColor: 'white',
+                          width: 100,
+                          height: 20,
+                          borderColor: 'black',
+                          borderWidth: 1,
+                          borderRadius: 5
+                        }}
+                        icon={
+                          <MaterialCommunityIcons
+                            name='account-edit'
+                            size={20}
+                            color='black'
+                          />
+                        }
+                        onPress={() => this.props.navigation.navigate('EditProfile')}
                       />
-                    }
-                    onPress = {() => this.props.navigation.navigate('Intro')}
-                  />
-              
-          </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.bioData} >
+                <View style={styles.name} >
+                  {this._renderProfileName(profile && profile.name)}
+                </View>
+                <View style={styles.status} >
+                  {this._renderProfileBio(profile && profile.bio)}
+                </View>
+              </View>
+            </View>
 
-      </View>
-    }
-    </ScrollView>
+            <View style={styles.logOutContainer}>
+
+              <Button
+                title='LOGOUT'
+                buttonStyle={{
+                  backgroundColor: '#3B8AB8',
+                  width: 200,
+                  height: 45,
+                  borderColor: "transparent",
+                  borderWidth: 0,
+                  borderRadius: 5
+                }}
+                icon={
+                  <MaterialCommunityIcons
+                    name='logout'
+                    size={24}
+                    color='white'
+                  />
+                }
+                onPress={() => this.props.navigation.navigate('Intro')}
+              />
+
+            </View>
+
+          </View>
+        }
+      </ScrollView>
     );
   }
 }
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
     marginLeft: 15
   },
   displayPic: {
-    height:80,
+    height: 80,
     width: 80,
     borderRadius: 40,
     marginTop: -20
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  posts :{
+  posts: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
