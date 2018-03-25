@@ -136,12 +136,12 @@ Social feed screen based on Facebook.
 - [ ] :star: **Bonus:** Use `ActivityIndicator` to show placeholder loading when fetching feed data
 - [ ] :star: **Bonus:** Use `DeviceEventEmitter` to trigger fetching posts when the `new_post_created` event is emitted
 - [ ] :star: **Bonus:** Use `timeSince()` utility function to show relative times for post creation
-- [x ] Create Post Screen - Make **`POST`** request to **`/api/users/:userId/posts`** to create a new post by the user
+- [x] Create Post Screen - Make **`POST`** request to **`/api/users/:userId/posts`** to create a new post by the user
 - [ ] :star: **Bonus:** Use `DeviceEventEmitter` to emit `new_post_created` event once post is created
-- [ ] Profile Screen - Make **`GET`** request to **`/api/users/:userId`** to get all the profile data
+- [x] Profile Screen - Make **`GET`** request to **`/api/users/:userId`** to get all the profile data
 - [ ] :star: **Bonus:** Use `ActivityIndicator` to show placeholder loading when fetching profile data
 - [ ] :star: **Bonus:** Use `DeviceEventEmitter` to trigger fetching profile data when the `user_profile_updated` event is emitted
-- [ ] Edit Profile Screen - Make **`PUT`** request to **`/api/users/:userId`** to update a user's profile information
+- [x] Edit Profile Screen - Make **`PUT`** request to **`/api/users/:userId`** to update a user's profile information
 - [ ] :star: **Bonus:** Use `DeviceEventEmitter` to emit `user_profile_updated` event once user data is updated
 - [ ] Setup Authentication flow for app using `AsyncStorage`. Once the user has logged in then take them to home page each time they open the app again
 - [ ] Use Redux to share state between tab bar & screens
