@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Keyboard, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Keyboard, SafeAreaView, Alert, ScrollView } from 'react-native';
 import Rocco_DisplayPic from '../../assets/Rocco_displayPic.jpg';
 import { Input, Button, Header } from 'react-native-elements';
 
@@ -7,24 +7,91 @@ export default class EditProfile extends React.Component {
     constructor(props) {
         super(props)
 
+        
+
         this.state = {
-            name: 'Rocco',
-            bio: 'Tell me more about you...',
-            email: 'rocco@daug.com'
+            isLoading: false,
+            name: '',
+            bio: '',
+            email: '',
+            profile_image: ''
         };
     }
 
+    async submitProfile() {
+        this.setState({ isLoading: true })
 
+        const { name, bio, profile_image } = this.state
+
+        var details = {
+            'name': name,
+            'bio': bio,
+            'profile_image': profile_image
+        };
+
+        var formBody = [];
+
+        for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+
+            formBody.push(encodedKey + "=" + encodedValue);
+        }
+
+        formBody = formBody.join("&");
+
+        try {
+            let response = await fetch(`https://daug-app.herokuapp.com/api/users/9`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                },
+                body: formBody
+            });
+
+            let responseJSON = null
+
+            if (response.status === 200) {
+                responseJSON = await response.json();
+
+                console.log(responseJSON)
+
+                this.setState({ isLoading: false })
+                
+                Alert.alert(
+                    'Success!',
+                    'Your profile is updated!',
+                    [
+                        { text: "Continue", onPress: () => this.props.navigation.goBack() }
+                    ],
+                    { cancelable: false }
+                )
+            } else {
+                responseJSON = await response.json();
+                const error = responseJSON.message
+
+                console.log(responseJSON)
+
+                this.setState({ isLoading: false, errors: responseJSON.errors })
+
+                Alert.alert('Unable to update profile!', `${error}`)
+            }
+        } catch (error) {
+            this.setState({ isLoading: false, response: error })
+
+            Alert.alert('Unable to update profile!', `${error}`)
+        }
+    }
 
 
     render() {
 
-        const { name, bio, email } = this.state
+        const { name, bio, email, profile_image } = this.state
         return (
             <View style={styles.maincontainer}>
                 <SafeAreaView style={{ backgroundColor: '#FAFAFA', }}>
                     <Header
-                        placement = 'center'
+                        placement='center'
                         leftComponent={
                             <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                                 <Text style={styles.navBar}>Cancel</Text>
@@ -38,7 +105,7 @@ export default class EditProfile extends React.Component {
                             }
                         }}
                         rightComponent={
-                            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                            <TouchableOpacity onPress={this.submitProfile.bind(this)}>
                                 <Text style={styles.navBar}>Done</Text>
                             </TouchableOpacity>
                         }
@@ -46,7 +113,11 @@ export default class EditProfile extends React.Component {
                     />
                 </SafeAreaView>
                 <View style={styles.imageContainer}>
-                    <Image style={styles.roccoDisplayPic} source={Rocco_DisplayPic} />
+                    <Image 
+                        style={styles.roccoDisplayPic} 
+                        source={Rocco_DisplayPic}
+                        resizeMode='cover'
+                    />
                     <TouchableOpacity>
                         <Text style={{ fontSize: 20, marginTop: 10, color: '#62B7E1', fontFamily: 'Futura' }}>
                             Change Photo
@@ -56,7 +127,7 @@ export default class EditProfile extends React.Component {
                 <View style={styles.nameContainer}>
                     <Text style={{ color: '#737373' }}>Name</Text>
                     <Input
-                        placeHolder='Tell me more about you'
+                        placeHolder= {this.state.name}
                         placeHolderTextColor='blace'
                         style={styles.inputStyle}
                         autoCapitalize="none"
@@ -72,10 +143,10 @@ export default class EditProfile extends React.Component {
                 <View style={styles.bioContainer}>
                     <Text style={{ color: '#737373' }}>Bio</Text>
                     <Input
-                        placeHolder='Tell me more about you'
+                        placeHolder={this.state.bio}
                         placeHolderTextColor='black'
                         style={styles.inputStyle}
-                        autoCapitalize="none"
+                        autoCapitalize="sentences"
                         autoCorrect={true}
                         keyboardType="default"
                         returnKeyType="done"
@@ -91,7 +162,7 @@ export default class EditProfile extends React.Component {
                 <View style={styles.emailContainer}>
                     <Text style={{ color: '#737373' }}>Email</Text>
                     <Input
-                        placeHolder='Tell me more about you'
+                        placeHolder={this.state.email}
                         placeHolderTextColor='black'
                         style={styles.inputStyle}
                         autoCapitalize="none"
@@ -169,7 +240,7 @@ const styles = StyleSheet.create({
         width: '100%',
         borderColor: '#aaaaaa',
     },
-    navBar : {
+    navBar: {
         fontSize: 16,
         color: '#C83E70'
     }

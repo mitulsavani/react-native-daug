@@ -34,16 +34,16 @@ export default class ProfileScreen extends React.Component {
   }
 
 
-  // async componentDidMount() {
-  //   await Font.loadAsync({
-  //     'Comfortaa': require('../../assets/fonts/Comfortaa.ttf'),
-  //     'ComfortaaBold': require('../../assets/fonts/ComfortaaBold.ttf')
-  //   });
+  async componentDidMount() {
+    await Font.loadAsync({
+      'Comfortaa': require('../../assets/fonts/Comfortaa.ttf'),
+      'ComfortaaBold': require('../../assets/fonts/ComfortaaBold.ttf')
+    });
 
-  //   this.setState({ fontLoaded: true });
+    this.setState({ fontLoaded: true });
 
-  //   this.fetchUser()
-  // }
+    this.fetchUser()
+  }
 
   componentDidMount(){
     this.fetchUser()
@@ -144,7 +144,7 @@ export default class ProfileScreen extends React.Component {
     return (
     
     <ScrollView style = {{backgroundColor: '#fff'}} >
-    {!isProfileLoading &&
+    { !isProfileLoading &&
       <View style={styles.mainContainer}>
           <View style={styles.userCoverPic}>
             {this._renderProfileBanner(profile && profile.banner_image)}
