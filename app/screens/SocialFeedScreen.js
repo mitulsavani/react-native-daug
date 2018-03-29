@@ -1,11 +1,9 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, ScrollView, FlatList, Image, TouchableOpacity, NativeModules, Platform, TouchableHighlight } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, ScrollView, FlatList, Image, TouchableOpacity, NativeModules, Platform, TouchableHighlight, Alert } from 'react-native';
 import ProfileScreen from './ProfileScreen';
 import { Icon } from 'react-native-elements';
 import {Font} from 'expo';
 import { MaterialCommunityIcons, SimpleLineIcons, Entypo } from '@expo/vector-icons';
-
-
 import {SOCIAL_FEED_MOCK_DATA} from '../utils/constant';
 const { StatusBarManager } = NativeModules;
 
@@ -28,8 +26,9 @@ export default class SocialFeedScreen extends React.Component {
       screen: '',
       commented: false,
       liked: false,
-      fontLoaded:false,
-      selectedIndex: -1,
+      fontLoaded: false,
+      isFeedLoading: false,
+      posts: null
     };
   }
 
@@ -40,22 +39,93 @@ export default class SocialFeedScreen extends React.Component {
     });
 
     this.setState({ fontLoaded: true });
+    this.getFeed()
+  }
+  
+
+  async getFeed() {
+    try {
+      let response = await fetch(`https://daug-app.herokuapp.com/api/feed`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+      });
+
+      let responseJSON = null
+
+      if (response.status === 200) {
+
+        responseJSON = await response.json();
+        console.log(responseJSON)
+        this.setState({
+          isFeedLoading: false,
+          posts: responseJSON,
+        })
+      } else {
+        responseJSON = await response.json();
+        const error = responseJSON.message
+
+        console.log(responseJSON)
+
+        this.setState({ errors: responseJSON.errors })
+        Alert.alert('Unable to get your feed', `Reason.. ${error}!`)
+      }
+    } catch (error) {
+      this.setState({ isFeedLoading: false, response: error })
+
+      console.log(error)
+
+      Alert.alert('Unable to get the feed. Please try again later')
+    }
+  }
+  
+  _renderProfileImage(image) {
+    if(image) {
+      return (
+        <Image style={styles.avatar} 
+          source = {{uri: image}}
+        />
+      )
+    }
   }
 
-  renderPost = ({ item }) => {
-    const {liked, commented, screen} = this.state;
+  _renderPostImage(image) {
+    if(image) {
+      return (
+        <Image style={styles.postImage} 
+          resizeMode="cover"
+          source = {{uri: image}}
+        />
+      )
+    }
+  }
+  
+  _renderPostDescription(description) {
+    if(description) {
+      return (
+        <Text style = {{marginLeft: 10, marginTop: 10, fontFamily: 'Comfortaa'}}> 
+          {description}
+        </Text>
+      )
+    }
+  }
+
+
+  renderPost(item) {
+    const {liked, commented, isFeedLoading, post, user} = this.state;
 
     return(
       <View style = {styles.postContainer}>
           <View style = {styles.postHeader}>
               <TouchableOpacity style = {styles.displayImageContainer} onPress={() => this.setState({ screen: 'ProfileScreen', selectedIndex: item.id })} >
-                  <Image source={{ url: item.image }} style={styles.avatar} />              
+                {this._renderProfileImage(item.user.profile_image)}
               </TouchableOpacity>
               
               <View style = {styles.nameAndImageContainer} >
                   <View style = {styles.avatarName} >
                       <Text style = {{fontSize: 17, fontFamily: 'ComfortaaBold', }}> 
-                        {item.name} 
+                        {item.user.name} 
                       </Text>
                   </View>
                   <View style = {styles.location} >
@@ -67,16 +137,14 @@ export default class SocialFeedScreen extends React.Component {
           </View>
           <View style = {styles.postImageCaptionContainer} >
               <TouchableOpacity onPress={() => this.props.navigation.navigate('PostDetails')}>
-                <Image source={{ url: item.post.image }} style={styles.postImage} resizeMode="cover" />
+                {this._renderPostImage(item.image)}
               </TouchableOpacity>
-              <Text style = {{marginLeft: 10, marginTop: 10, fontFamily: 'Comfortaa'}}> 
-                  {item.post.caption}
-              </Text>
+              {this._renderPostDescription(item.description )}
           </View>
           
           <View style = {styles.postLogs} >
               <View style = {styles.postDate} >
-                  <Text style = {{fontSize: 11, color: '#4C4B4B', fontFamily: 'Comfortaa'}}> {item.post.date} </Text>
+                  <Text style = {{fontSize: 11, color: '#4C4B4B', fontFamily: 'Comfortaa'}}> 2hr </Text>
               </View>
               <View style = {styles.postActionView} >
                   <Icon
@@ -100,12 +168,7 @@ export default class SocialFeedScreen extends React.Component {
   }
 
   render() {
-    const { screen, selectedIndex } = this.state;
-
-    if (screen === 'ProfileScreen' && selectedIndex !== -1) {
-      return <ProfileScreen index={selectedIndex} />;
-    }
-
+    const { isFeedLoading, fontLoaded, posts } = this.state;
     return (
       <SafeAreaView style={styles.safeArea}>
         <ScrollView>
@@ -122,13 +185,13 @@ export default class SocialFeedScreen extends React.Component {
               />
             </TouchableOpacity>
           </View>
-          {this.state.fontLoaded &&
+          { (this.state.fontLoaded && !isFeedLoading) &&
             <View style = {styles.mainContent} >
                 <FlatList style={styles.list} 
                   keyExtractor = {(item, index) => index}
                   extraData = {this.state}
-                  data = {SOCIAL_FEED_MOCK_DATA}
-                  renderItem={this.renderPost}
+                  data = {posts}
+                  renderItem={({item}) => this.renderPost(item)}
                 />
             </View>
           }
