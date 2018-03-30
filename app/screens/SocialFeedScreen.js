@@ -1,10 +1,26 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, ScrollView, FlatList, Image, TouchableOpacity, NativeModules, Platform, TouchableHighlight, Alert } from 'react-native';
-import ProfileScreen from './ProfileScreen';
+import { 
+  SafeAreaView, 
+  StyleSheet, 
+  Text, 
+  View, 
+  ScrollView, 
+  FlatList, 
+  Image, 
+  TouchableOpacity, 
+  NativeModules, 
+  Platform,
+  TouchableHighlight,
+  Alert,
+  ActivityIndicator,
+  DeviceEventEmitter
+} from 'react-native';
+
 import { Icon } from 'react-native-elements';
 import {Font} from 'expo';
 import { MaterialCommunityIcons, SimpleLineIcons, Entypo } from '@expo/vector-icons';
-import {SOCIAL_FEED_MOCK_DATA} from '../utils/constant';
+import {ENV_URL, timeSince, getUserId} from '../utils/helpers';
+
 const { StatusBarManager } = NativeModules;
 
 export default class SocialFeedScreen extends React.Component { 
@@ -23,7 +39,6 @@ export default class SocialFeedScreen extends React.Component {
     super(props);
 
     this.state = {
-      screen: '',
       commented: false,
       liked: false,
       fontLoaded: false,
@@ -40,8 +55,22 @@ export default class SocialFeedScreen extends React.Component {
 
     this.setState({ fontLoaded: true });
     this.getFeed()
+
+    getUserId()
+      .then(res => {
+        this.setState({ userId: res })
+        this.fetchUser()
+      })
+      .catch(err => {
+        alert("An error occurred")
+      });
   }
   
+  componentWillMount() {
+    DeviceEventEmitter.addListener('new_post_created', (e) => {
+      this.getFeed()
+    })
+  }
 
   async getFeed() {
     try {
@@ -79,6 +108,33 @@ export default class SocialFeedScreen extends React.Component {
       Alert.alert('Unable to get the feed. Please try again later')
     }
   }
+
+  async fetchUser() {
+    this.setState({ isFeedLoading: true });
+
+    try {
+      let response = await fetch(`${ENV_URL}/api/users/${this.state.userId}`, {
+        method: 'GET'
+      });
+
+      let responseJSON = null
+
+      if (response.status === 200) {
+        responseJSON = await response.json();
+
+        console.log(responseJSON);
+
+        this.setState({ user: responseJSON, isFeedLoading: false })
+      } else {
+        responseJSON = await response.json();
+        const error = responseJSON.message
+
+        console.log("failed" + error);
+      }
+    } catch (error) {
+      console.log("failed" + error);
+    }
+  }
   
   _renderProfileImage(image) {
     if(image) {
@@ -113,12 +169,13 @@ export default class SocialFeedScreen extends React.Component {
 
 
   renderPost(item) {
-    const {liked, commented, isFeedLoading, post, user} = this.state;
+    const {liked, commented } = this.state;
+    const { navigate } = this.props.navigation;
 
     return(
       <View style = {styles.postContainer}>
           <View style = {styles.postHeader}>
-              <TouchableOpacity style = {styles.displayImageContainer} onPress={() => this.setState({ screen: 'ProfileScreen', selectedIndex: item.id })} >
+              <TouchableOpacity style = {styles.displayImageContainer} onPress={() => navigate('Profile', { isHeaderShow: true, userId: item.user.id })} activeOpacity={0.8}>
                 {this._renderProfileImage(item.user.profile_image)}
               </TouchableOpacity>
               
@@ -167,35 +224,52 @@ export default class SocialFeedScreen extends React.Component {
     )
   }
 
-  render() {
-    const { isFeedLoading, fontLoaded, posts } = this.state;
+  loadingView() {
+    return(
+      <View style={styles.loadingView}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+  contentView() {
+    const { posts, isFeedLoading } = this.state;
+
     return (
+      <View style = {{flex: 1,backgroundColor: 'white' }} >
+        <FlatList style={styles.list} 
+          keyExtractor = {(item, index) => index}
+          extraData = {this.state}
+          data = {posts}
+          renderItem={({item}) => this.renderPost(item)}
+          onRefresh={() => this.getFeed()}
+          refreshing={isFeedLoading}
+        />
+      </View>
+    )
+  }
+
+  render() {
+    const { isFeedLoading, posts, fontLoaded } = this.state;
+    return ( this.state.fontLoaded &&
       <SafeAreaView style={styles.safeArea}>
+      { this.state.fontLoaded &&
         <ScrollView>
-        <View style={styles.createPostContainer}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('CreatePost')}>
-              <Text style={styles.createPostLabel}>Create Post</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('CreatePost')}>
-            <Icon
-                name='picture'
-                type='simple-line-icon'
-                size={20}
-                iconStyle={styles.photoPostIcon}
-              />
-            </TouchableOpacity>
-          </View>
-          { (this.state.fontLoaded && !isFeedLoading) &&
-            <View style = {styles.mainContent} >
-                <FlatList style={styles.list} 
-                  keyExtractor = {(item, index) => index}
-                  extraData = {this.state}
-                  data = {posts}
-                  renderItem={({item}) => this.renderPost(item)}
+          <View style={styles.createPostContainer}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('CreatePost')}>
+                <Text style={styles.createPostLabel}>Create Post</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('CreatePost')}>
+              <Icon
+                  name='picture'
+                  type='simple-line-icon'
+                  size={20}
+                  iconStyle={styles.photoPostIcon}
                 />
+              </TouchableOpacity>
             </View>
-          }
+            { isFeedLoading ? this.loadingView() : this.contentView() }
         </ScrollView>
+      }
       </SafeAreaView>
     );
   }
@@ -206,11 +280,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: Platform.OS === 'ios' ? 0 : StatusBarManager.HEIGHT,
   },
-
+  loadingView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   list: {
     backgroundColor: 'white'
   },
-
   mainContent:{
     flex: 1,
     justifyContent: 'center',
@@ -242,7 +319,6 @@ const styles = StyleSheet.create({
   },
   nameAndImageContainer: {
     flex: 9,
-    
   },
   avatar: {
     height: 50,
@@ -301,7 +377,7 @@ const styles = StyleSheet.create({
     color: '#2F80ED',
     fontSize: 17,
     fontWeight: 'bold',
-    fontFamily: 'Arial',
+    fontFamily: 'ComfortaaBold',
     marginLeft: 20,
   },
 
