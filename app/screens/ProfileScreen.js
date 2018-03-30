@@ -8,7 +8,8 @@ import {
   ScrollView,
   Dimensions,
   DeviceEventEmitter,
-  ActivityIndicator
+  ActivityIndicator,
+  Alert
 } from 'react-native';
 import { MaterialCommunityIcons, SimpleLineIcons, Entypo } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
@@ -53,7 +54,6 @@ export default class ProfileScreen extends React.Component {
       'ComfortaaBold': require('../../assets/fonts/ComfortaaBold.ttf')
     });
 
-    this.setState({ fontLoaded: true });
     const{ userId } = this.state;
 
     if(userId === null)
@@ -78,6 +78,7 @@ export default class ProfileScreen extends React.Component {
           alert("An error occurred")
         });
     }
+    this.setState({ fontLoaded: true });
   }
 
   componentWillMount() {
@@ -90,7 +91,7 @@ export default class ProfileScreen extends React.Component {
     this.setState({ isProfileLoading: true });
 
     try {
-      let response = await fetch(`${ENV_URL}/api/users/${this.state.userId}`, {
+      let response = await fetch(`https://daug-app.herokuapp.com/api/users/${this.state.userId}`, {
         method: 'GET'
       });
 
