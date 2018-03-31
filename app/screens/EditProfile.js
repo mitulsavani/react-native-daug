@@ -60,7 +60,7 @@ export default class EditProfile extends React.Component {
 
         try {
 
-            let response = await fetch(`https://daug-app.herokuapp.com/api/users/9`, {
+            let response = await fetch(`https://daug-app.herokuapp.com/api/users/${this.state.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
