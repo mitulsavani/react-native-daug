@@ -4,8 +4,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
 import { MaterialCommunityIcons, SimpleLineIcons, Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo';
-
 import SocialFeedScreen from './SocialFeedScreen';
+import { onSignIn } from '../utils/helpers';
 
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -69,7 +69,7 @@ export default class LoginScreen extends React.Component {
           'Login',
           'You have successfully Loged-In',
           [
-            { text: "Continue", onPress: () => navigate("Home") }
+            { text: "Continue", onPress: () => onSignIn(responseJSON.user.id).then(() => navigate("Home")) }
           ],
           { cancelable: false }
         )

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput,Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Alert, DeviceEventEmitter  } from 'react-native';
 import { Header, Button } from 'react-native-elements';
 import { SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -54,10 +54,15 @@ async sharePressed() {
 
         this.setState({ isLoading: false })
         Alert.alert(
-            'Signed Up!',
-            'You have successfully signed up!',
+            'Post Created',
+            '',
             [
-                { text: "Continue", onPress: () => navigate("SocialFeed") }
+                {
+                    text: "Dismiss", onPress: () => {
+                        DeviceEventEmitter.emit('new_post_created', {})
+                        this.props.navigation.goBack()
+                    }
+                }
             ],
             { cancelable: false }
         )

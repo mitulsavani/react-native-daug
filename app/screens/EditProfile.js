@@ -39,6 +39,7 @@ export default class EditProfile extends React.Component {
         formBody = formBody.join("&");
 
         try {
+            
             let response = await fetch(`https://daug-app.herokuapp.com/api/users/9`, {
                 method: 'PUT',
                 headers: {
