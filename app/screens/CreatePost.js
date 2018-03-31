@@ -1,29 +1,64 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Alert, DeviceEventEmitter  } from 'react-native';
+import {
+    StyleSheet, 
+    Text, 
+    View, 
+    Image, 
+    TouchableOpacity, 
+    TextInput, 
+    Alert, 
+    ImageEditor, 
+    DeviceEventEmitter  
+} from 'react-native';
 import { Header, Button } from 'react-native-elements';
 import { SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Font, ImagePicker } from 'expo';
+import { RNS3 } from 'react-native-aws3';
 
-import Rocco_DisplayPic from '../../assets/Rocco_displayPic.jpg';
+import { getUserId, ENV_URL } from '../utils/helpers';
 
 export default class CreatePost extends React.Component {
 
 constructor(props) {
     super(props);
 
+    const { member } = props.navigation.state.params
     this.state = {
         newPostContent: '',
-        isLoading: false
+        isLoading: false,
+        fontLoaded: false,
+        member,
+        image: null
     };
+}
+
+async componentDidMount() {
+    await Font.loadAsync({
+        'Comfortaa': require('../../assets/fonts/Comfortaa.ttf'),
+    });
+    getUserId()
+        .then(res => this.setState({ userId: res }))
+        .catch(err => { console.log(err); alert("An error occurred")});
+
+    this.setState({ fontLoaded: true });
+
 }
 async sharePressed() {
     this.setState({ isLoading: true })
 
-    const { newPostContent,isLoading } = this.state
+    const { newPostContent,isLoading, image } = this.state
     const { navigate } = this.props.navigation
 
-    var details = {
-        'description': newPostContent,
-    };
+    var details = {};
+
+    if(image !== null)
+    {
+        details.image = image
+    }
+    if(newPostContent !== null && newPostContent.length > 0)
+    {
+        details.description = newPostContent
+    }
 
     var formBody = [];
 
@@ -37,7 +72,7 @@ async sharePressed() {
     formBody = formBody.join("&");
 
     try {
-        let response = await fetch(`https://daug-app.herokuapp.com/api/users/7/posts`, {
+        let response = await fetch(`https://daug-app.herokuapp.com/api/users/${this.state.userId}/posts`, {
         method: 'POST',
         headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -83,66 +118,142 @@ async sharePressed() {
         Alert.alert('Sign up failed!', 'Unable to Signup. Please try again later')
     }
 }
-render() {
-    const{newPostContent} = this.state
-    return (
-    <View style={styles.container}>
-        <Header
-            placement = 'center'
-            leftComponent = {
-                <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                    <Text style = {styles.headerButton} > Cancel </Text>
-                </TouchableOpacity>
-            }
-            centerComponent = {{
-                text: 'Create Post',
-                style: {
-                color: '#C83E70', fontSize: 20,
-                fontWeight: 'bold',
-                }
-            }}   
-            rightComponent = {
-                <TouchableOpacity onPress={() => this.sharePressed()}>
-                    <Text style = {styles.headerButton} > Share </Text>
-                </TouchableOpacity>
-            }
-            outerContainerStyles={{ backgroundColor: '#FAFAFA' }}
-            
-        />
-            <View style = {styles.infoContainer}>
-                <View style = {styles.authorpicture}>
-                    <Image style={styles.roccoDisplayPic} source = {Rocco_DisplayPic} />
-                </View>
-                <View style = {styles.authorInfo}>
-                    <View style = {styles.authorName}>
-                        <Text style = {{fontSize: 20, color: '#4045A8', fontWeight: 'bold', fontFamily: 'Futura'  }}> 
-                            Rocco
-                        </Text>
-                    </View>
-                    <View style = {styles.location}>
-                    <TouchableOpacity style={styles.locationContainer}>
-                        <SimpleLineIcons
-                            name="location-pin"
-                            size={12}
-                        />
-                        <Text style={styles.locationName}>Add Location</Text>
-                    </TouchableOpacity>
-                    </View>
-                </View>
-            </View>
-            <View style = {styles.postPara}>
-                <TextInput
-                    style={styles.content}
-                    multiline
-                    placeholder="What's on your mind?"
-                    placeholderTextColor="grey"
-                    underlineColorAndroid="rgba(0,0,0,0)"
-                    onChangeText={(newPostContent) => this.setState({newPostContent})}
+
+    pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            aspect: [4, 3],
+        });
+
+        if (result.cancelled) {
+            console.log('Profile Image cancelled');
+            return;
+        }
+
+        let resizedUri = await new Promise((resolve, reject) => {
+            ImageEditor.cropImage(result.uri,
+                {
+                    offset: { x: 0, y: 0 },
+                    size: { width: result.width, height: result.height },
+                    displaySize: { width: result.width, height: result.height },
+                    resizeMode: 'contain',
+                },
+                (uri) => resolve(uri),
+                () => reject(),
+            );
+        });
+
+
+        const file = {
+            uri: resizedUri,
+            name: `user_${this.state.userId}_post_${new Date().getTime()}.png`,
+            type: "image/png"
+        }
+
+        const options = {
+            keyPrefix: "uploads/",
+            bucket: "daug",
+            region: "us-east-1",
+            accessKey: "AKIAIKG2UJ7AHBKJ5N2Q",
+            secretKey: "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",
+            successActionStatus: 201
+        }
+
+        RNS3.put(file, options).then(response => {
+            if (response.status !== 201)
+                throw new Error("Failed to upload image to S3");
+
+            console.log(response.body);
+            console.log(response.body.postResponse.location)
+            console.log(response.body.postResponse.location)
+            this.setState({ image: response.body.postResponse.location });
+            console.log(response.body.postResponse.location)
+        });
+    };
+
+    render() {
+        const { newPostContent, image, member } = this.state
+        const { goBack } = this.props.navigation
+        return (
+            <View style={styles.container}>
+                <Header
+                    placement='center'
+                    leftComponent={
+                        <TouchableOpacity onPress={() => goBack()}>
+                            <Text style={styles.headerButton} > Cancel </Text>
+                        </TouchableOpacity>
+                    }
+                    centerComponent={{
+                        text: 'Create Post',
+                        style: {
+                            color: '#C83E70', 
+                            fontSize: 20,
+                            fontWeight: 'bold',
+                            fontFamily: 'Comfortaa'
+                        }
+                    }}
+                    rightComponent={
+                        <TouchableOpacity onPress={() => this.sharePressed()}>
+                            <Text style={styles.headerButton} > Share </Text>
+                        </TouchableOpacity>
+                    }
+                    outerContainerStyles={{ backgroundColor: '#FAFAFA' }}
+
                 />
+                <View style={styles.infoContainer}>
+                    <View style={styles.authorpicture}>
+                        <TouchableOpacity activeOpacity={0.8} >
+                            <Image 
+                            style={styles.roccoDisplayPic} 
+                            source={{uri: member && member.profile_image || ''}} 
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.authorInfo}>
+                        <View style={styles.authorName}>
+                            <Text style={{ fontSize: 20, color: '#4045A8', fontWeight: 'bold', fontFamily: 'Comfortaa' }}>
+                                { member && member.name}
+                            </Text>
+                        </View>
+                        <View style={styles.location}>
+                            <TouchableOpacity style={styles.locationContainer}>
+                                <SimpleLineIcons
+                                    name="location-pin"
+                                    size={12}
+                                />
+                                <Text style={styles.locationName}>Add Location</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+                <View style={styles.postPara}>
+                    <TextInput
+                        style={styles.content}
+                        multiline
+                        placeholder="What's on your mind?"
+                        placeholderTextColor="grey"
+                        underlineColorAndroid="rgba(0,0,0,0)"
+                        onChangeText={(newPostContent) => this.setState({ newPostContent })}
+                    />
+                </View>
+                <View style={styles.createPostImageContainer}>
+                    {this.state.image ?
+                        <Image source={{ uri: image }} style={styles.postImage} resizeMode="cover" /> :
+                        <View style={styles.createAddPostImageContainer}>
+                            <Text style={styles.orLabel}>OR</Text>
+                            <TouchableOpacity style={styles.cameraIconView} onPress={() => this.pickImage()}>
+                                <SimpleLineIcons
+                                    name='camera'
+                                    style={{ color: '#aaaaaa' }}
+                                    size={42}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    }
             </View>
-        </View>
-    );
-}
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -160,7 +271,7 @@ infoContainer: {
 },
 
 postPara: {
-    height: 300,
+    height:200,
     backgroundColor: 'white',
 
 },
@@ -206,8 +317,32 @@ content: {
 },
 headerButton: {
     color: '#C83E70',
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: 'bold',
-}
+    fontFamily: 'Comfortaa'
+},
+createPostImageContainer: {
+    display: 'flex'
+},
+postImage: {
+    width: '100%',
+    height: 250
+},
+createAddPostImageContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    height: 200
+},
+orLabel: {
+    flex: 1,
+    color: '#aaaaaa',
+    fontSize: 26,
+    marginTop: 40,
+    fontFamily: 'Comfortaa',
+    fontWeight: 'bold'
+},
+cameraIconView: {
+    flex: 1,
+},
 
 });
