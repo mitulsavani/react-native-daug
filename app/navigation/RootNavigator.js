@@ -2,7 +2,6 @@ import { StackNavigator } from 'react-navigation';
 
 import IntroStack from './IntroStack';
 import HomeTabs from './HomeTabs';
-import ProfileStack from './ProfileStack';
 
 //Connecting both IntroStack and HomeTabs
 export default StackNavigator ({
@@ -17,7 +16,7 @@ export default StackNavigator ({
         },
     },
     {
-        initialRouteName: 'Home',
+        initialRouteName: 'Intro',
         mode: 'modal',
         headerMode: 'none'
     });

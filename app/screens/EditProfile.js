@@ -1,19 +1,39 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Keyboard, SafeAreaView, Alert, ScrollView } from 'react-native';
-import Rocco_DisplayPic from '../../assets/Rocco_displayPic.jpg';
+import { 
+    StyleSheet,
+    Text, 
+    View, 
+    Image, 
+    TouchableOpacity, 
+    Keyboard, 
+    SafeAreaView, 
+    Alert, 
+    ScrollView,
+    ImageEditor,
+    DeviceEventEmitter 
+} from 'react-native';
 import { Input, Button, Header } from 'react-native-elements';
+import { RNS3 } from 'react-native-aws3';
+import { Font, ImagePicker } from 'expo';
 
 export default class EditProfile extends React.Component {
     constructor(props) {
         super(props)
 
+        const { user } = props.navigation.state.params
+
         this.state = {
             isLoading: false,
-            name: '',
-            bio: '',
-            email: '',
-            profile_image: ''
+            fontLoaded: false,
+            ...user
         };
+    }
+
+    async componentDidMount(){
+        await Font.loadAsync({
+            'Comfortaa': require('../../assets/fonts/Comfortaa.ttf'),
+        });
+        this.setState({fontLoaded: true})
     }
 
     async submitProfile() {
@@ -39,6 +59,7 @@ export default class EditProfile extends React.Component {
         formBody = formBody.join("&");
 
         try {
+
             let response = await fetch(`https://daug-app.herokuapp.com/api/users/9`, {
                 method: 'PUT',
                 headers: {
@@ -57,10 +78,13 @@ export default class EditProfile extends React.Component {
                 this.setState({ isLoading: false })
 
                 Alert.alert(
-                    'Success!',
-                    'Your profile is updated!',
+                    'Profile updated!',
+                    '',
                     [
-                        { text: "Continue", onPress: () => this.props.navigation.goBack() }
+                        { text: "Dismiss", onPress: () => {
+                        DeviceEventEmitter.emit('user_profile_updated', {})
+                        this.props.navigation.goBack()
+                        }}
                     ],
                     { cancelable: false }
                 )
@@ -81,6 +105,56 @@ export default class EditProfile extends React.Component {
         }
     }
 
+    pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            aspect: [4, 3],
+        });
+
+        if (result.cancelled) {
+            console.log('Profile Image cancelled');
+            return;
+        }
+
+        let resizedUri = await new Promise((resolve, reject) => {
+            ImageEditor.cropImage(result.uri,
+                {
+                    offset: { x: 0, y: 0 },
+                    size: { width: result.width, height: result.height },
+                    displaySize: { width: result.width, height: result.height },
+                    resizeMode: 'contain',
+                },
+                (uri) => resolve(uri),
+                () => reject(),
+            );
+        });
+
+        const file = {
+            uri: resizedUri,
+            name: `user_${this.state.id}_profile_image_${new Date().getTime()}.png`,
+            type: "image/png"
+        }
+
+        const options = {
+            keyPrefix: "uploads/",
+            bucket: "daug",
+            region: "us-east-1",
+            accessKey: "AKIAIKG2UJ7AHBKJ5N2Q",
+            secretKey: "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",
+            successActionStatus: 201
+        }
+
+        RNS3.put(file, options).then(response => {
+            if (response.status !== 201)
+                throw new Error("Failed to upload image to S3");
+
+            console.log(response.body);
+
+            this.setState({ profile_image: response.body.postResponse.location });
+        });
+    };
+    
+
 
     render() {
 
@@ -100,6 +174,7 @@ export default class EditProfile extends React.Component {
                             style: {
                                 color: '#C83E70', fontSize: 20,
                                 fontWeight: 'bold',
+                                fontFamily: 'Comfortaa'
                             }
                         }}
                         rightComponent={
@@ -112,14 +187,14 @@ export default class EditProfile extends React.Component {
                 </SafeAreaView>
                 <View style={styles.imageContainer}>
                     <Image
-                        style={styles.roccoDisplayPic}
-                        source={Rocco_DisplayPic}
+                        style={styles.DisplayPic}
+                        source={{uri: profile_image || ''}}
                         resizeMode='cover'
                     />
-                    <TouchableOpacity>
-                        <Text style={{ fontSize: 20, marginTop: 10, color: '#62B7E1', fontFamily: 'Futura' }}>
+                    <TouchableOpacity onPress={ () => this.pickImage() }>
+                        <Text style={{ fontSize: 20, marginTop: 10, color: '#62B7E1', fontFamily: 'Comfortaa' }}>
                             Change Photo
-                    </Text>
+                        </Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.nameContainer}>
@@ -136,7 +211,7 @@ export default class EditProfile extends React.Component {
                         onChangeText={(name) => this.setState({ name })}
                         containerStyle={styles.inputElementsContainer}
                     />
-
+                    
                 </View>
                 <View style={styles.bioContainer}>
                     <Text style={{ color: '#737373' }}>Bio</Text>
@@ -152,7 +227,7 @@ export default class EditProfile extends React.Component {
                         onChangeText={(bio) => this.setState({ bio })}
                         containerStyle={styles.inputElementsContainer}
                     />
-
+                    
                 </View>
                 <View style={styles.privateContainer}>
                     <Text style={{ color: '#737373', marginLeft: 5 }}>Personal Information</Text>
@@ -171,10 +246,8 @@ export default class EditProfile extends React.Component {
                         onChangeText={(email) => this.setState({ email })}
                         containerStyle={styles.inputElementsContainer}
                     />
-
                 </View>
             </View>
-
         );
     }
 }
@@ -223,7 +296,7 @@ const styles = StyleSheet.create({
         marginRight: 5
     },
 
-    roccoDisplayPic: {
+    DisplayPic: {
         height: 150,
         width: 150,
         borderRadius: 75,
@@ -240,6 +313,7 @@ const styles = StyleSheet.create({
     },
     navBar: {
         fontSize: 16,
-        color: '#C83E70'
+        color: '#C83E70',
+        fontFamily: 'Comfortaa'
     }
 });

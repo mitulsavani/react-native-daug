@@ -6,8 +6,8 @@ import { LinearGradient } from 'expo';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { MaterialCommunityIcons, SimpleLineIcons, Entypo } from '@expo/vector-icons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { onSignIn } from '../utils/helpers';
 
-import IntroScreen from './IntroScreen'
 
 export default class SignupScreen extends React.Component {
   static navigationOptions = {
@@ -72,7 +72,7 @@ export default class SignupScreen extends React.Component {
           'Signed Up!',
           'You have successfully signed up!',
           [
-            { text: "Continue", onPress: () => navigate("Home") }
+            { text: "Continue", onPress: () => onSignIn(responseJSON.user.id).then(() => navigate("Home")) }
           ],
           { cancelable: false }
         )
