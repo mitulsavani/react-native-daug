@@ -146,7 +146,7 @@ async sharePressed() {
 
         const file = {
             uri: resizedUri,
-            name: `user_${this.state.member.id}_post_${new Date().getTime()}.png`,
+            name: `user_${this.state.userId}_post_${new Date().getTime()}.png`,
             type: "image/png"
         }
 
@@ -212,7 +212,7 @@ async sharePressed() {
                     <View style={styles.authorInfo}>
                         <View style={styles.authorName}>
                             <Text style={{ fontSize: 20, color: '#4045A8', fontWeight: 'bold', fontFamily: 'Comfortaa' }}>
-                                {member && member.name}
+                                { member && member.name}
                             </Text>
                         </View>
                         <View style={styles.location}>
