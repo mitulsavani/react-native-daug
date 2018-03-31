@@ -250,7 +250,8 @@ export default class ProfileScreen extends React.Component {
                       }
                     />
                     :
-                        <Button title={this.state.following ? 'Following' : 'Follow'}
+                        <Button 
+                        title={this.state.following ? 'Following' : 'Follow'}
                         containerStyle={{ marginBottom: -5 }}
                         buttonStyle={this.state.following ? styles.followingButton : styles.followButton}
                         textStyle={this.state.following ? styles.followingText : styles.followText}

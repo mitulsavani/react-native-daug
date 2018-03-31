@@ -193,7 +193,7 @@ export default class SocialFeedScreen extends React.Component {
               </View>
           </View>
           <View style = {styles.postImageCaptionContainer} >
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('PostDetails')}>
+              <TouchableOpacity onPress={() => navigate('PostDetails', { postId: item.id })} activeOpacity ={1}>
                 {this._renderPostImage(item.image)}
               </TouchableOpacity>
               {this._renderPostDescription(item.description )}
@@ -201,23 +201,23 @@ export default class SocialFeedScreen extends React.Component {
           
           <View style = {styles.postLogs} >
               <View style = {styles.postDate} >
-                  <Text style = {{fontSize: 11, color: '#4C4B4B', fontFamily: 'Comfortaa'}}> 2hr </Text>
+                  <Text style = {{fontSize: 11, color: '#4C4B4B', fontFamily: 'Comfortaa'}}> {timeSince(item.createdAt)} </Text>
               </View>
               <View style = {styles.postActionView} >
                   <Icon
                   name={commented ? "ios-chatbubbles" : "ios-chatbubbles-outline"}
                   color={commented ? 'black' : null} type="ionicon" size={25}
-                  onPress={() => this.setState({ commented: !commented })}
+                  onPress={() => navigate('PostDetails', { postId: item.id })}
                   />
-                  <Text style={styles.postActionText}>10</Text>
+                  <Text style={styles.postActionText}> {!!item.comments && item.comments.length || 0 }</Text>
               </View>
               <View style={[styles.postActionView, {marginRight: 20}]}>
                   <Icon
                     name={liked ? "ios-heart" : "ios-heart-outline"}
                     color={liked ? 'red' : null} type="ionicon" size={25}
-                    onPress={() => this.setState({ liked: !liked })}
+                    onPress={() => navigate('PostDetails', { postId: item.id })}
                   />
-                  <Text style={styles.postActionText}>200</Text>
+                  <Text style={styles.postActionText}>{!!item.likes && item.likes.length || 0 }</Text>
               </View>
           </View>
       </View>
@@ -227,7 +227,7 @@ export default class SocialFeedScreen extends React.Component {
   loadingView() {
     return(
       <View style={styles.loadingView}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large"/>
       </View>
     );
   }
@@ -249,16 +249,18 @@ export default class SocialFeedScreen extends React.Component {
   }
 
   render() {
-    const { isFeedLoading, posts, fontLoaded } = this.state;
-    return ( this.state.fontLoaded &&
+    const { isFeedLoading, posts, fontLoaded, user } = this.state;
+    const {navigate} = this.props.navigation
+
+    return ( fontLoaded &&
       <SafeAreaView style={styles.safeArea}>
       { this.state.fontLoaded &&
         <ScrollView>
           <View style={styles.createPostContainer}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('CreatePost')}>
+              <TouchableOpacity onPress={() => navigate('CreatePost', { item: user })}>
                 <Text style={styles.createPostLabel}>Create Post</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('CreatePost')}>
+              <TouchableOpacity onPress={() => navigate('CreatePost', { item: user })}>
               <Icon
                   name='picture'
                   type='simple-line-icon'
