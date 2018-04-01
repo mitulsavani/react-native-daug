@@ -1,6 +1,16 @@
-# Daug mobile app
+<p align="center">
+<a href="https://github.com/jkhusanov/daug-mobile/">
+<img alt="daug" src="https://github.com/mitulsavani/daug-mobile/blob/master/assets/daugLogo.png" width="250">
+</a>
+</p>
 
-This repo is the mobile app for Daug.
+<h3 align="center">
+Daug mobile app
+</h3>
+
+<p align="center">
+Daug is a social network for pets.
+</p>
 
 ## What's Daug?
 
@@ -22,7 +32,38 @@ exp start
 exp ios
 ```
 
-## Assignment #1
+## Functionality
+- Daug is a fully functioning Social Network app
+- Users can Sign up & Log into the app
+- Users can create a new Posts
+- Users can like and comments on Posts
+- Users can follow each other
+
+Used [React Native AWS3](https://github.com/benjreinhart/react-native-aws3)  library to let the users upload a new profile picture. Additionally, I used [React Native Elements](https://github.com/react-native-training/react-native-elements) library to build UI, [React Navigation](https://reactnavigation.org/) library to handle navigation, and packages such as react-native-modal and react-native-keyboard-aware-scroll-view to improve UI.
+
+Would like to implement Redux in the future to better manage the state. Also would like to add themeing to the app to enable light/dark modes, and overall make the app more dynamic and functional.
+
+
+## Milestones
+
+Below you can see my main milestones and how I achieved them
+
+## Designs
+
+Intro, Login & Sign Up screens are based on **Robinhood App**.
+
+Profile screen is based on **Instagram**.
+
+Social Feed screen is based on **Facebook** and **Instagram**.
+
+### Other design ideas
+
+- [Login screen designs on Pinterest](https://www.pinterest.com/timoa/mobile-ui-logins/?lp=true)
+- [Mobile UI on Dribble](https://dribbble.com/search?q=mobile+UI)
+- [Instagram UI kit - Sketch file](https://www.sketchappsources.com/free-source/2023-instagram-based-ui-kit-sketch-freebie-resource.html)
+
+
+## Milestone #1
 
 ### Objectives
 
@@ -30,6 +71,7 @@ exp ios
 - Learn advanced RN styling and use LinearGradient, Image, Icons & Custom Fonts
 - Learn how to use mock data for prototyping UI screens
 - Learn how to use NPM libaries such as React Native Elements, Expo & React Native Vector Icons
+
 
 ## Designs
 
@@ -73,7 +115,7 @@ Social feed screen based on Facebook.
 </div>
 
 
-## Assignment #2
+## Milestone #2
 
 ### Objectives
 
@@ -92,14 +134,13 @@ Social feed screen based on Facebook.
 - [x] Setup a **RootNavigator** (using StackNavigator) with the **IntroStack** & **HomeTabs** with `mode: "modal"`
 - [x] Design & build an Edit Profile Screen
 - [x] Setup a **ProfileStack** (using StackNavigator) for the Profile Screen (root), Post Details Screen (push) & Edit Profile Screen (modal) with mode: "modal" and custom RNE header component
-- [ ] Design & build a Post Details Screen
+- [x] Design & build a Post Details Screen
 - [x] Design & build a Create Post Screen
 - [x] Setup a **SocialStack** (using StackNavigator) for the Social Feed Screen (root), Post Details Screen (push) & Create Post Screen (modal) with mode: "modal" and custom RNE header component
-- [ ] :star: **Bonus:** Display Posts on ProfileScreen
-- [ ] :star: **Bonus:** Setup a **HomeNavigator**(using DrawerNavigator) with the **HomeTabs** (as root) and update **RootNavigator** to use **HomeNavigator** instead of **HomeTabs**
-- [ ] Add working gif of app to `README.MD`
+- [x] :star: **Bonus:** Display Posts on ProfileScreen
+- [x] :star: **Bonus:** Setup a **HomeNavigator**(using DrawerNavigator) with the **HomeTabs** (as root) and update **RootNavigator** to use **HomeNavigator** instead of **HomeTabs**
 
-## Assignment #3
+## Milestone #3
 
 ### Objectives
 
@@ -125,6 +166,50 @@ Social feed screen based on Facebook.
 - `/signup` => `POST` = `( name, email, password )` => Used to create a new user
 - `/login` => `POST` = `( email, password )` => Used to validate an existing user
 
+```
+**Namespace:** `/auth`
+
+// User Authentication endpoints
+router.post('auth/signup'); // CREATE
+router.post('auth/login'); // VALIDATE / READ
+
+
+**Namespace:** `/api`
+
+// All data endpoints
+router.get('api/users/all'); // READ
+router.get('api/posts/all'); // READ
+
+// Social Feed endpoints
+router.get('api/feed'); // READ
+
+// User data endpoints
+router.get('api/users/:userId'); // READ
+router.put('api/users/:userId'); // UPDATE
+
+// Posts endpoints
+router.get('api/posts/:postId'); // READ
+router.post('api/users/:userId/posts'); // CREATE
+router.put('api/users/:userId/posts/:postId'); // UPDATE
+router.delete('api/users/:userId/posts/:postId'); // DELETE
+
+// Follower endpoints
+router.get('api/users/:userId/followers'); // READ
+router.get('api/users/:userId/following'); // READ
+router.post('api/users/:userId/follow/:followingId'); // CREATE
+router.post('api/users/:userId/unfollow/:followingId'); // DELETE
+
+// Like endpoints
+router.get('api/posts/:postId/likes'); // READ
+router.post('api/posts/:postId/like/:userId'); // CREATE
+router.post('api/posts/:postId/unlike/:userId'); // DELETE
+
+// Comment endpoints
+router.get('api/posts/:postId/comments'); // READ
+router.post('api/posts/:postId/comment/:userId'); // CREATE
+router.post('api/posts/:postId/uncomment/:userId'); // DELETE
+```
+
 ### TODO
 
 - [x] Intro Screen - Make simple **`GET`** request to **`/api`** to check server status
@@ -132,47 +217,43 @@ Social feed screen based on Facebook.
 - [ ] :star: **Bonus:** Add UI validation to Signup Screen - name (not null), email (format) & password (min. 8 characters)
 - [x] Login Screen - Make **`POST`** request to **`/auth/login`** to validate and login an existing user
 - [ ] :star: **Bonus:** Add UI validation to Login Screen - email (format) & password (min. 8 characters)
-- [ ] Social Feed Screen - Make **`GET`** request to **`/api/feed/`** to get all posts for social feed
-- [ ] :star: **Bonus:** Use `ActivityIndicator` to show placeholder loading when fetching feed data
-- [ ] :star: **Bonus:** Use `DeviceEventEmitter` to trigger fetching posts when the `new_post_created` event is emitted
-- [ ] :star: **Bonus:** Use `timeSince()` utility function to show relative times for post creation
+- [x] Social Feed Screen - Make **`GET`** request to **`/api/feed/`** to get all posts for social feed
+- [x] :star: **Bonus:** Use `ActivityIndicator` to show placeholder loading when fetching feed data
+- [x] :star: **Bonus:** Use `DeviceEventEmitter` to trigger fetching posts when the `new_post_created` event is emitted
+- [x] :star: **Bonus:** Use `timeSince()` utility function to show relative times for post creation
 - [x] Create Post Screen - Make **`POST`** request to **`/api/users/:userId/posts`** to create a new post by the user
-- [ ] :star: **Bonus:** Use `DeviceEventEmitter` to emit `new_post_created` event once post is created
+- [x] :star: **Bonus:** Use `DeviceEventEmitter` to emit `new_post_created` event once post is created
 - [x] Profile Screen - Make **`GET`** request to **`/api/users/:userId`** to get all the profile data
-- [ ] :star: **Bonus:** Use `ActivityIndicator` to show placeholder loading when fetching profile data
-- [ ] :star: **Bonus:** Use `DeviceEventEmitter` to trigger fetching profile data when the `user_profile_updated` event is emitted
+- [x] :star: **Bonus:** Use `ActivityIndicator` to show placeholder loading when fetching profile data
+- [x] :star: **Bonus:** Use `DeviceEventEmitter` to trigger fetching profile data when the `user_profile_updated` event is emitted
 - [x] Edit Profile Screen - Make **`PUT`** request to **`/api/users/:userId`** to update a user's profile information
-- [ ] :star: **Bonus:** Use `DeviceEventEmitter` to emit `user_profile_updated` event once user data is updated
-- [ ] Setup Authentication flow for app using `AsyncStorage`. Once the user has logged in then take them to home page each time they open the app again
+- [x] :star: **Bonus:** Use `DeviceEventEmitter` to emit `user_profile_updated` event once user data is updated
+- [x] Setup Authentication flow for app using `AsyncStorage`. Once the user has logged in then take them to home page each time they open the app again
 - [ ] Use Redux to share state between tab bar & screens
-- [ ] Add working gif of app to `README.MD`
+- [x] Add working gif of app to `README.MD`
 
-## Submission
+## Wrap up
 
-Once you have completed the assignment, please create a new issue on this repo with the title as your name and add the link to your repo in the description. One of the TA's will review your code and add your name to the list of completed submissions below if all looks good.
+### Objectives
 
-### Completed submissions
+- Add UI polish, tie up loose end and add remaining functionality
+- Update Readme with app details and publish Expo app for demo
+- Serve as an React Native app that you can showcase on your porfolio
 
-- [ ] Ryan Liszewski
-- [ ] Thomas Zhu
-- [ ] Bhavesh Chowdhury
-- [ ] Sukhjit Singh
-- [ ] Prakash Gurung
-- [ ] Nicholas Szeto
-- [ ] Emanuel Saunders
-- [ ] William Hua
-- [x] Mitul Savani
-- [ ] Jakhongir Khusanov
-- [ ] Teodora Caneva
-- [ ] Girish Rawat
-- [ ] Karan Gupta
+### TODO
+- [x] Dynamically load user info
+- [x] Fix photo upload and add take photo functionality
+- [x] Add Like, Comment and Follow API functionality
+- [x] Clean up and format `README.MD` to showcase app - [follow this template](https://github.com/mobilespace/MobileGuides/blob/master/showcase_app_readme.md#readme-template-for-showcasing-a-mobile-app)
+- [ ] :star: **Bonus:** Add phone number UI to Edit Profile screen
+- [x] :star: **Bonus:** Add Camera functionality to Create Post screen
+- [ ] :star: **Bonus:** Use Redux to share state between tab bar & screens
+- [x] Add working gif of app to `README.MD`
 
-## Problems?
 
-In case you run into any problems or issues, please post it on #questions channel on the MobileSpace Slack.
+## Feedback
 
-## Finally
-
-For any other questions about this repo in general please reach out to [**@mitulsavani**](https://github.com/mitulsavani) on Github.
+For any other questions about this repo in general please reach out to [**@mitulsavani**](https://github.com/mitulsavani) on Github. <br>
+PS: Feel free to fork it if you find my app interesting.
 
 
