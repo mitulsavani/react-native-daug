@@ -244,7 +244,7 @@ async sharePressed() {
                             <TouchableOpacity style={styles.cameraIconView} onPress={() => this.pickImage()}>
                                 <SimpleLineIcons
                                     name='camera'
-                                    style={{ color: '#aaaaaa' }}
+                                    style={{ color: 'grey' }}
                                     size={42}
                                 />
                             </TouchableOpacity>
@@ -335,7 +335,7 @@ createAddPostImageContainer: {
 },
 orLabel: {
     flex: 1,
-    color: '#aaaaaa',
+    color: 'grey',
     fontSize: 26,
     marginTop: 40,
     fontFamily: 'Comfortaa',

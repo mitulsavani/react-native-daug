@@ -9,6 +9,7 @@ import {
   Dimensions,
   DeviceEventEmitter,
   ActivityIndicator,
+  TouchableOpacity,
   Alert
 } from 'react-native';
 import { MaterialCommunityIcons, SimpleLineIcons, Entypo } from '@expo/vector-icons';
@@ -176,6 +177,35 @@ export default class ProfileScreen extends React.Component {
     }
   }
 
+  displayPost(post, index) {
+    const { navigate } = this.props.navigation
+
+    return (
+      <TouchableOpacity
+        style={[styles.postIconContainer, { width: DEVICE_WIDTH / 3, height: DEVICE_WIDTH / 3 }]}
+        key={index}
+        onPress={() => navigate('Post', { postId: post.id })}
+        activeOpacity={1}
+      >
+        {post.image && <Image source={{ uri: post.image || '' }} style={styles.postImage} resizeMode="cover" />}
+      </TouchableOpacity>
+    )
+  }
+
+  renderPosts() {
+    const { posts } = this.state.user
+
+    return (
+      <View style={styles.postsContainer}>
+        {
+          posts.map((post, index) => {
+            return this.displayPost(post, index)
+          })
+        }
+      </View>
+    )
+  }
+
   loadingView() {
     return(
       <View style={styles.loadingView}>
@@ -271,30 +301,34 @@ export default class ProfileScreen extends React.Component {
               </View>
             </View>
           </View>
-
-          <View style={styles.logOutContainer}>
-
-            <Button
-              title='LOGOUT'
-              buttonStyle={{
-                backgroundColor: '#3B8AB8',
-                width: 200,
-                height: 45,
-                borderColor: "transparent",
-                borderWidth: 0,
-                borderRadius: 5
-              }}
-              icon={
-                <MaterialCommunityIcons
-                  name='logout'
-                  size={24}
-                  color='white'
-                />
-              }
-              onPress={() => this.props.navigation.navigate('Intro')}
-            />
-
-          </View>
+          
+          {
+            !isHeaderShow ? 
+            <View style={styles.logOutContainer}>
+              {this.renderPosts()}
+              <Button
+                title='LOGOUT'
+                buttonStyle={{
+                  backgroundColor: '#3B8AB8',
+                  width: 200,
+                  height: 45,
+                  borderColor: "transparent",
+                  borderWidth: 0,
+                  borderRadius: 5
+                }}
+                icon={
+                  <MaterialCommunityIcons
+                    name='logout'
+                    size={24}
+                    color='white'
+                  />
+                }
+                onPress={() =>onSignOut().then(() => this.props.navigation.navigate('Intro')) }
+              />
+            </View>
+            :
+            this.renderPosts()
+          }
 
         </View>
       </ScrollView> 
@@ -441,4 +475,19 @@ const styles = StyleSheet.create({
   followingText: {
     color: 'black',
   },
+  postsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingTop: 10,
+    paddingBottom: 20
+  },
+  postIconContainer: {
+    borderWidth: 1.5,
+    borderColor: 'white',
+    backgroundColor: 'black'
+  },
+  postImage: {
+    flex: 1
+  }
 });
