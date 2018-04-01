@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   followingButton: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#28ABEC',
     borderColor: '#aaaaaa',
     borderWidth: 2,
     width: 100,
@@ -474,6 +474,7 @@ const styles = StyleSheet.create({
   },
   followingText: {
     color: 'black',
+    fontSize: 13
   },
   postsContainer: {
     display: 'flex',
