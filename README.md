@@ -23,15 +23,6 @@ Daug is a social network for pets.
 ### [Demo - Try it on Expo](https://exp.host/@mitulsavani/daug-mobile)
 ![daug_demo](https://github.com/mitulsavani/daug-mobile/blob/master/assets/daug.gif)
 
-## Getting started
-
-```
-git clone git@github.com:mitulsavani/daug-mobile.git
-
-exp start
-
-exp ios
-```
 
 ## Functionality
 - Daug is a fully functioning Social Network app
@@ -40,7 +31,7 @@ exp ios
 - Users can like and comments on Posts
 - Users can follow each other
 
-Used [React Native AWS3](https://github.com/benjreinhart/react-native-aws3)  library to let the users upload a new profile picture. Additionally, I used [React Native Elements](https://github.com/react-native-training/react-native-elements) library to build UI, [React Navigation](https://reactnavigation.org/) library to handle navigation, and packages such as react-native-modal and react-native-keyboard-aware-scroll-view to improve UI.
+Used [React Native AWS3](https://github.com/benjreinhart/react-native-aws3)  library to let the users upload a new profile picture. Additionally, I used [React Native Elements](https://github.com/react-native-training/react-native-elements) library to build UI, [React Navigation](https://reactnavigation.org/) library to handle navigation, and packages such as react-native-modal and [React-Native-Keyboard-Aware-Scroll-View](https://github.com/APSL/react-native-keyboard-aware-scroll-view) to improve UI.
 
 Would like to implement Redux in the future to better manage the state. Also would like to add themeing to the app to enable light/dark modes, and overall make the app more dynamic and functional.
 
@@ -70,20 +61,6 @@ Below you can see my main milestones and how I achieved them
 - [x] :star: **Bonus:** Add the Logout button
 - [x] Design & build an Social Feed Screen with [Mock Data](https://raw.githubusercontent.com/mobilespace/daug-mobile/master/app/utils/constants.js?token=AHejrmtQeRKU4ntCxaYLoNiWDlF-kQdKks5am8vHwA%3D%3D)
 - [x] Attach screenshots/gif of screens to `README.MD`
-
-### Demo
-
-<div style={{display: flex; flex-direction: row}}>
-<img src="screenshots/Intro.png" width="250" />
-<img src="screenshots/Login.png" width="250" />
-<img src="screenshots/LoginFail.png" width="250" />
-</div>
-<div style={{display: flex; flex-direction: row}}>
-<img src="screenshots/Signup.png" width="250" />
-<img src="screenshots/SocialFeed.png" width="250" />
-<img src="screenshots/SocialFeed2.png" width="250" />
-<img src="screenshots/Profile.png" width="250" />
-</div>
 
 
 ## Milestone #2
@@ -137,6 +114,15 @@ Below you can see my main milestones and how I achieved them
 - [ ] :star: **Bonus:** Use Redux to share state between tab bar & screens
 - [x] Add working gif of app to `README.MD`
 
+## Getting started
+
+```
+git clone git@github.com:mitulsavani/daug-mobile.git
+
+exp start
+
+exp ios
+```
 
 ## Feedback
 
