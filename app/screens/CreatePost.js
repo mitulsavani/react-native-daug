@@ -6,6 +6,7 @@ import {
     Image, 
     TouchableOpacity, 
     TextInput, 
+    ScrollView,
     Alert, 
     ImageEditor, 
     DeviceEventEmitter  
@@ -16,6 +17,8 @@ import { Font, ImagePicker } from 'expo';
 import { RNS3 } from 'react-native-aws3';
 
 import { getUserId, ENV_URL } from '../utils/helpers';
+//TODO
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default class CreatePost extends React.Component {
 
@@ -172,8 +175,9 @@ async sharePressed() {
     };
 
     render() {
-        const { newPostContent, image, member } = this.state
+        const { newPostContent, image, member, location } = this.state
         const { goBack } = this.props.navigation
+        console.log(member)
         return (
             <View style={styles.container}>
                 <Header
@@ -217,11 +221,11 @@ async sharePressed() {
                         </View>
                         <View style={styles.location}>
                             <TouchableOpacity style={styles.locationContainer}>
-                                <SimpleLineIcons
+                                {/* <SimpleLineIcons
                                     name="location-pin"
                                     size={12}
-                                />
-                                <Text style={styles.locationName}>Add Location</Text>
+                                /> */}
+                                <Text style={styles.locationName}>{member && member.location}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -257,6 +261,9 @@ async sharePressed() {
 }
 
 const styles = StyleSheet.create({
+mainContent: {
+    flex:1
+},
 container: {
     //flex: 1,
     justifyContent: 'center',

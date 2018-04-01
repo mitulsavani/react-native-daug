@@ -181,13 +181,13 @@ export default class SocialFeedScreen extends React.Component {
               </TouchableOpacity>
               
               <View style = {styles.nameAndImageContainer} >
-                  <View style = {styles.avatarName} >
+                  <TouchableOpacity style = {styles.avatarName} onPress={() => navigate('Profile', { isHeaderShow: true, userId: item.user.id })} activeOpacity={0.8} >
                       <Text style = {{fontSize: 17, fontFamily: 'ComfortaaBold', }}> 
                         {item.user.name} 
                       </Text>
-                  </View>
+                  </TouchableOpacity>
                   <View style = {styles.location} >
-                      <Text style = {{ color: '#3B3C40', fontSize: 12, fontFamily: 'Comfortaa', fontStyle: 'italic' }}> 
+                      <Text style = {{ color: 'black', fontSize: 12, fontFamily: 'Comfortaa', fontStyle: 'italic' }}> 
                         {item.location} 
                       </Text>
                   </View>

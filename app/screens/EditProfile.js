@@ -16,6 +16,10 @@ import { Input, Button, Header } from 'react-native-elements';
 import { RNS3 } from 'react-native-aws3';
 import { Font, ImagePicker } from 'expo';
 
+//TODO
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
+
 export default class EditProfile extends React.Component {
     constructor(props) {
         super(props)
@@ -159,6 +163,7 @@ export default class EditProfile extends React.Component {
     render() {
 
         const { name, bio, email, profile_image } = this.state
+
         return (
             <View style={styles.maincontainer}>
                 <SafeAreaView style={{ backgroundColor: '#FAFAFA', }}>
@@ -256,8 +261,10 @@ export default class EditProfile extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    mainContent: {
+        flex: 1
+    },
     maincontainer: {
-
         backgroundColor: '#EFEFF5',
         justifyContent: 'center',
     },
