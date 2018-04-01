@@ -485,7 +485,7 @@ const styles = StyleSheet.create({
   postIconContainer: {
     borderWidth: 1.5,
     borderColor: 'white',
-    backgroundColor: 'black'
+    backgroundColor: 'grey'
   },
   postImage: {
     flex: 1
