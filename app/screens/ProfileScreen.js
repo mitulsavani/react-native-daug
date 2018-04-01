@@ -27,6 +27,7 @@ export default class ProfileScreen extends React.Component {
       headerTintColor: '#C83E70',
       headerTitleStyle: {
         fontSize: 20,
+        fontFamily: 'Comfortaa'
       },
       headerStyle: {
         backgroundColor: '#FAFAFA',
@@ -242,16 +243,16 @@ export default class ProfileScreen extends React.Component {
               <View style={styles.activityContainer} >
                 <View style={styles.postAndFollowContainer} >
                   <View style={styles.posts} >
-                    <Text style={{ fontWeight: 'bold' }} >  {user.posts ? user.posts.length : '0'}   </Text>
-                    <Text style={{ fontWeight: 'bold' }}> Post </Text>
+                    <Text style={{ fontWeight: 'bold', fontFamily: 'Comfortaa' }} >  {user.posts ? user.posts.length : '0'}   </Text>
+                    <Text style={{ fontWeight: 'bold', fontFamily: 'Comfortaa' }}> Post </Text>
                   </View>
                   <View style={styles.followers} >
-                    <Text style={{ fontWeight: 'bold' }}> {user.followers && user.followers.length || 0} </Text>
-                    <Text style={{ fontWeight: 'bold' }}> Followers </Text>
+                    <Text style={{ fontWeight: 'bold', fontFamily: 'Comfortaa' }}> {user.followers && user.followers.length || 0} </Text>
+                    <Text style={{ fontWeight: 'bold', fontFamily: 'Comfortaa' }}> Followers </Text>
                   </View>
                   <View style={styles.following} >
-                    <Text style={{ fontWeight: 'bold' }}> {user.following && user.following.length || 0} </Text>
-                    <Text style={{ fontWeight: 'bold' }}> Following </Text>
+                    <Text style={{ fontWeight: 'bold', fontFamily: 'Comfortaa' }}> {user.following && user.following.length || 0} </Text>
+                    <Text style={{ fontWeight: 'bold', fontFamily: 'Comfortaa' }}> Following </Text>
                   </View>
                 </View>
 
@@ -260,8 +261,13 @@ export default class ProfileScreen extends React.Component {
                   {  
                     !isHeaderShow ?
                     <Button
+                      onPress={() => navigate('EditProfile', {user : user})}
                       title='Edit'
-                      titleStyle={{ fontSize: 13, color: 'black' }}
+                      titleStyle={{ 
+                        fontSize: 13, 
+                        color: 'black', 
+                        fontFamily: 'Comfortaa' 
+                      }}
                       buttonStyle={{
                         backgroundColor: 'white',
                         width: 100,
@@ -270,7 +276,6 @@ export default class ProfileScreen extends React.Component {
                         borderWidth: 1,
                         borderRadius: 5
                       }}
-                      onPress={() => navigate('EditProfile', {user : user})}
                       icon={
                         <MaterialCommunityIcons
                           name='account-edit'
@@ -284,7 +289,7 @@ export default class ProfileScreen extends React.Component {
                         title={this.state.following ? 'Following' : 'Follow'}
                         containerStyle={{ marginBottom: -5 }}
                         buttonStyle={this.state.following ? styles.followingButton : styles.followButton}
-                        textStyle={this.state.following ? styles.followingText : styles.followText}
+                        titleStyle={this.state.following ? styles.followingText : styles.followText}
                         onPress={() => this.followUser()}
                         />
                   }        
@@ -294,10 +299,10 @@ export default class ProfileScreen extends React.Component {
             </View>
             <View style={styles.bioData} >
               <View style={styles.name} >
-              <Text style={{ fontSize: 25, fontWeight: 'bold' }}> {user && user.name} </Text>
+              <Text style={{ fontSize: 20, fontWeight: 'bold', fontFamily: 'Comfortaa' }}> {user && user.name} </Text>
               </View>
               <View style={styles.status} >
-              <Text style={{ fontSize: 15, fontStyle: 'italic' }} > {user && user.bio} </Text>
+              <Text style={{ fontSize: 15, fontStyle: 'italic', fontFamily: 'Comfortaa' }} > {user && user.bio} </Text>
               </View>
             </View>
           </View>
@@ -308,6 +313,7 @@ export default class ProfileScreen extends React.Component {
               {this.renderPosts()}
               <Button
                 title='LOGOUT'
+                titleStyle = {{fontFamily: 'Comfortaa'}}
                 buttonStyle={{
                   backgroundColor: '#3B8AB8',
                   width: 200,
@@ -401,13 +407,13 @@ const styles = StyleSheet.create({
   },
   name: {
     flex: 1.5,
-    marginLeft: 15,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginLeft: 5
   },
   status: {
     flex: 1,
     justifyContent: 'center',
-    marginLeft: 15
+    marginLeft: 5
   },
   displayPic: {
     height: 80,
@@ -470,11 +476,13 @@ const styles = StyleSheet.create({
   },
   followText: {
     color: 'white',
-    fontSize: 13
+    fontSize: 13,
+    fontFamily: 'Comfortaa'
   },
   followingText: {
     color: 'black',
-    fontSize: 13
+    fontSize: 13,
+    fontFamily: 'Comfortaa'
   },
   postsContainer: {
     display: 'flex',

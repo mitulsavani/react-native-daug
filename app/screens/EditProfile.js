@@ -201,7 +201,8 @@ export default class EditProfile extends React.Component {
                     <Text style={{ color: '#737373' }}>Name</Text>
                     <Input
                         placeHolder={this.state.name}
-                        placeHolderTextColor='blace'
+                        placeHolderTextColor='black'
+                        inputStyle = {{ color: 'black', fontFamily: 'Comfortaa', fontSize: 15 }}
                         style={styles.inputStyle}
                         autoCapitalize="none"
                         autoCorrect={false}
@@ -218,6 +219,7 @@ export default class EditProfile extends React.Component {
                     <Input
                         placeHolder={this.state.bio}
                         placeHolderTextColor='black'
+                        inputStyle = {{ color: 'black', fontFamily: 'Comfortaa', fontSize: 15 }}
                         style={styles.inputStyle}
                         autoCapitalize="sentences"
                         autoCorrect={true}
@@ -237,6 +239,7 @@ export default class EditProfile extends React.Component {
                     <Input
                         placeHolder={this.state.email}
                         placeHolderTextColor='black'
+                        inputStyle = {{ color: 'black', fontFamily: 'Comfortaa', fontSize: 15 }}
                         style={styles.inputStyle}
                         autoCapitalize="none"
                         autoCorrect={true}
@@ -306,6 +309,7 @@ const styles = StyleSheet.create({
         borderColor: '#aaaaaa',
         fontSize: 18,
         color: 'black',
+        fontFamily: 'Comfortaa' 
     },
     inputElementsContainer: {
         width: '100%',
