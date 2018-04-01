@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Keyboard, Alert} from 'react-native';
 import { Input, Button } from 'react-native-elements';
-import { LinearGradient } from 'expo';
+import { LinearGradient, Font } from 'expo';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { MaterialCommunityIcons, SimpleLineIcons, Entypo } from '@expo/vector-icons';
@@ -11,10 +11,10 @@ import { onSignIn } from '../utils/helpers';
 
 export default class SignupScreen extends React.Component {
   static navigationOptions = {
-    title: "Let's get Started",
+    title: "Sign Up",
     headerStyle: {backgroundColor: '#4C3ADC', borderBottomWidth: 0},
-    headerTintColor: 'white',
-    headerTitleStyle: { color: 'white', fontSize: 20 }
+    headerTintColor: 'orange',
+    headerTitleStyle: { color: 'orange', fontSize: 20, fontFamily: 'Futura' }
   };
 
   constructor(props){
@@ -106,7 +106,7 @@ export default class SignupScreen extends React.Component {
         style={styles.container}>
             <Input
                   placeholder = 'Name'
-                  inputStyle = {{ color: 'white' }}
+                  inputStyle = {{ color: 'white', fontFamily: 'Futura' }}
                   autoCapitalize = "none"
                   autoCorrect = {false}
                   returnKeyType = "next"
@@ -122,7 +122,7 @@ export default class SignupScreen extends React.Component {
             />
             <Input
                   placeholder = 'Email'
-                  inputStyle = {{ color: 'white' }}
+                  inputStyle = {{ color: 'white', fontFamily: 'Futura' }}
                   autoCapitalize = "none"
                   autoCorrect = {false}
                   keyboardType = "email-address"
@@ -141,7 +141,7 @@ export default class SignupScreen extends React.Component {
                   placeholder = 'Password'
                   palceholderTextColor="white"
                   secureTextEntry
-                  inputStyle = {{ color: 'white' }}
+                  inputStyle = {{ color: 'white', fontFamily: 'Futura' }}
                   autoCapitalize = "none"
                   autoCorrect = {false}
                   keyboardType = "email-address"
@@ -174,6 +174,7 @@ export default class SignupScreen extends React.Component {
                     color='white'
                   />
                 }
+                titleStyle = {{fontSize: 20, fontFamily: 'Futura'}}
                 onPress = {() => this.signupButtonPressed()}
               />
           </View>

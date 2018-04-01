@@ -1,11 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import { Input, Button } from 'react-native-elements';
 import { Font, LinearGradient } from 'expo';
 import DAUG_LOGO from '../../assets/daugLogo.png';
-import { Comfortaa } from '../../assets/fonts/Comfortaa.ttf';
-
-import LoginScreen from './LoginScreen'
-import SignUpScreen from './SignupScreen'
 
 export default class IntroScreen extends React.Component {
   static navigationOptions = {
@@ -62,16 +59,17 @@ export default class IntroScreen extends React.Component {
           <View style={styles.login}>
             <Button
               title="Login"
-              color='black'
+              titleStyle = {{fontSize: 20, fontFamily: 'Futura'}}
+              buttonStyle = {styles.Button}
               onPress={() => this.props.navigation.navigate('Login')}
             />
           </View>
           <View style={styles.signup}>
-            <Button onPress={() => this.props.navigation.navigate('Signup')}
+            <Button
               title="Sign Up"
-              
-              color='black'
-              size="30"
+              titleStyle = {{fontSize: 20, fontFamily: 'Futura', color: 'white'}}
+              buttonStyle = {styles.Button}
+              onPress={() => this.props.navigation.navigate('Signup')}
             />
           </View>
         </View>
@@ -118,5 +116,11 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-    }
+    },
+  Button: {
+    backgroundColor: '#A0545B',
+    width: 100,
+    height: 20,
+    borderRadius: 5
+  },
 });

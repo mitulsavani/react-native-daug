@@ -30,8 +30,9 @@ export default class SocialFeedScreen extends React.Component {
     headerTitleStyle: {
       fontSize: 20,
       fontWeight: 'bold',
+      fontFamily: 'Futura'
     },
-    headerStyle: { backgroundColor: '#FAFAFA', borderBottomWidth: 0.5, borderBottomColor: '#aaaaaa',},
+    //headerStyle: { backgroundColor: '#FAFAFA', borderBottomWidth: 0.5, borderBottomColor: '#aaaaaa',},
   });
   
   

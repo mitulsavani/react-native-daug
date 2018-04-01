@@ -3,16 +3,16 @@ import { StyleSheet, Text, TextInput, View, Keyboard, Alert } from 'react-native
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
 import { MaterialCommunityIcons, SimpleLineIcons, Entypo } from '@expo/vector-icons';
-import { LinearGradient } from 'expo';
+import { LinearGradient, Font } from 'expo';
 import SocialFeedScreen from './SocialFeedScreen';
 import { onSignIn } from '../utils/helpers';
 
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
-    title: "Login",
+    title: "Login to Account",
     headerStyle: {backgroundColor: '#4C3ADC', borderBottomWidth: 0},
-    headerTintColor: 'white',
-    headerTitleStyle: { color: 'white', fontSize: 20 }
+    headerTintColor: 'orange',
+    headerTitleStyle: { color: 'orange', fontSize: 20, fontFamily: 'Futura' }
   };
   
   constructor(props){
@@ -22,7 +22,7 @@ export default class LoginScreen extends React.Component {
       //screen: null,
       email: '',
       password: '',
-      isLoading: false
+      isLoading: false,
     };
   }
 
@@ -106,7 +106,7 @@ export default class LoginScreen extends React.Component {
           <Input
                 placeholder = 'Email'
                 //TODO: Font probably goes down here
-                inputStyle = {{ color: 'white' }}
+                inputStyle = {{ color: 'white', fontFamily: 'Futura' }}
                 autoCapitalize = "none"
                 autoCorrect = {false}
                 keyboardType = "email-address"
@@ -122,10 +122,9 @@ export default class LoginScreen extends React.Component {
                 onChangeText={(email) => this.setState({email})}
           />
           <Input
-                placeholder = 'Password'
-                
+                placeholder = 'Password' 
                 secureTextEntry
-                inputStyle = {{ color: 'white' }}
+                inputStyle = {{ color: 'white', fontFamily: 'Futura' }}
                 autoCapitalize = "none"
                 autoCorrect = {false}
                 keyboardType = "email-address"
@@ -158,6 +157,7 @@ export default class LoginScreen extends React.Component {
                   color='white'
                 />
               }
+              titleStyle = {{fontSize: 20, fontFamily: 'Futura'}}
               onPress = {() => this.loginButtonPressed()}
             />
         </View>
