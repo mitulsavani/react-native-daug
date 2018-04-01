@@ -21,6 +21,7 @@ Daug is a social network for pets.
 - They can also look at **other pets posts** and either **paw** (like) or **scratch** (dislike) it.
 
 ### [Demo - Try it on Expo](https://exp.host/@mitulsavani/daug-mobile)
+![daug_demo](https://github.com/mitulsavani/daug-mobile/blob/master/assets/daug.gif)
 
 ## Getting started
 
