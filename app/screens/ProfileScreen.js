@@ -10,7 +10,10 @@ import {
   DeviceEventEmitter,
   ActivityIndicator,
   TouchableOpacity,
-  Alert
+  Alert,
+  SafeAreaView,
+  NativeModules,
+  Platform
 } from 'react-native';
 import { MaterialCommunityIcons, SimpleLineIcons, Entypo } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
@@ -18,6 +21,7 @@ import { Font } from 'expo';
 import { onSignOut, ENV_URL, getUserId } from '../utils/helpers';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
+const { StatusBarManager } = NativeModules;
 
 export default class ProfileScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -185,7 +189,7 @@ export default class ProfileScreen extends React.Component {
       <TouchableOpacity
         style={[styles.postIconContainer, { width: DEVICE_WIDTH / 3, height: DEVICE_WIDTH / 3 }]}
         key={index}
-        onPress={() => navigate('Post', { postId: post.id })}
+        onPress={() => navigate('PostDetails', { postId: post.id })}
         activeOpacity={1}
       >
         {post.image && <Image source={{ uri: post.image || '' }} style={styles.postImage} resizeMode="cover" />}
@@ -221,6 +225,7 @@ export default class ProfileScreen extends React.Component {
     const { navigate } = this.props.navigation;
     
     return (
+    <SafeAreaView style={styles.safeArea}>
       <ScrollView style={{ backgroundColor: '#fff' }} >
         <View style={styles.mainContainer}>
           <View style={styles.userCoverPic}>
@@ -338,6 +343,7 @@ export default class ProfileScreen extends React.Component {
 
         </View>
       </ScrollView> 
+    </SafeAreaView>
     )
   }
   render() {
@@ -345,6 +351,7 @@ export default class ProfileScreen extends React.Component {
     const { navigate } = this.props.navigation;
 
     return (
+      
       this.state.fontLoaded && ( isProfileLoading || user === null ? this.loadingView() : this.contentView() ) 
     );
   }
@@ -355,6 +362,10 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
   },
+  safeArea: {
+    flex: 1,
+    paddingTop: Platform.OS === 'ios' ? 0 : StatusBarManager.HEIGHT,
+  },
   loadingView: {
     flex: 1,
     justifyContent: 'center',
@@ -362,14 +373,15 @@ const styles = StyleSheet.create({
 
   },
   userCoverPic: {
-    flex: 1,
+    height: 150,
     backgroundColor: 'black',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    position: 'relative'
   },
 
   infoContainer: {
-    height: 120,
+    height: 150,
     flexDirection: 'column',
     backgroundColor: 'pink'
   },
@@ -382,7 +394,7 @@ const styles = StyleSheet.create({
   logs: {
     flex: 2,
     backgroundColor: 'red',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   bioData: {
     flex: 1.5,
@@ -419,11 +431,14 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
     borderRadius: 40,
-    marginTop: -20
+    marginTop: -20,
+    position: 'absolute'
+    
   },
   postAndFollowContainer: {
     flex: 2,
     flexDirection: 'row',
+    justifyContent: 'space-around'
   },
   editProfileContainer: {
     flex: 1,

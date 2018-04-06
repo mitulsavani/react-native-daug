@@ -12,14 +12,13 @@ export default class LoginScreen extends React.Component {
     title: "Login to Account",
     headerStyle: {backgroundColor: '#4C3ADC', borderBottomWidth: 0},
     headerTintColor: 'orange',
-    headerTitleStyle: { color: 'orange', fontSize: 20, fontFamily: 'Futura' }
+    headerTitleStyle: { color: 'orange', fontSize: 20}
   };
   
   constructor(props){
     super(props);
 
     this.state = {
-      //screen: null,
       email: '',
       password: '',
       isLoading: false,
@@ -106,7 +105,7 @@ export default class LoginScreen extends React.Component {
           <Input
                 placeholder = 'Email'
                 //TODO: Font probably goes down here
-                inputStyle = {{ color: 'white', fontFamily: 'Futura' }}
+                inputStyle = {{ color: 'white' }}
                 autoCapitalize = "none"
                 autoCorrect = {false}
                 keyboardType = "email-address"
@@ -123,8 +122,8 @@ export default class LoginScreen extends React.Component {
           />
           <Input
                 placeholder = 'Password' 
-                secureTextEntry
-                inputStyle = {{ color: 'white', fontFamily: 'Futura' }}
+                secureTextEntry 
+                inputStyle = {{ color: 'white'}}
                 autoCapitalize = "none"
                 autoCorrect = {false}
                 keyboardType = "email-address"
@@ -157,7 +156,7 @@ export default class LoginScreen extends React.Component {
                   color='white'
                 />
               }
-              titleStyle = {{fontSize: 20, fontFamily: 'Futura'}}
+              titleStyle = {{fontSize: 20}}
               onPress = {() => this.loginButtonPressed()}
             />
         </View>

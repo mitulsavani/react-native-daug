@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import { Font, LinearGradient } from 'expo';
 import DAUG_LOGO from '../../assets/daugLogo.png';
+import * as Animatable from 'react-native-animatable';
 
 export default class IntroScreen extends React.Component {
   static navigationOptions = {
@@ -40,7 +41,6 @@ export default class IntroScreen extends React.Component {
       console.log("Server is down " + error);
     }
   }
- 
 
   render() {
 
@@ -59,7 +59,7 @@ export default class IntroScreen extends React.Component {
           <View style={styles.login}>
             <Button
               title="Login"
-              titleStyle = {{fontSize: 20, fontFamily: 'Futura'}}
+              titleStyle = {{fontSize: 20}}
               buttonStyle = {styles.Button}
               onPress={() => this.props.navigation.navigate('Login')}
             />
@@ -67,7 +67,7 @@ export default class IntroScreen extends React.Component {
           <View style={styles.signup}>
             <Button
               title="Sign Up"
-              titleStyle = {{fontSize: 20, fontFamily: 'Futura', color: 'white'}}
+              titleStyle = {{fontSize: 20, color: 'white'}}
               buttonStyle = {styles.Button}
               onPress={() => this.props.navigation.navigate('Signup')}
             />
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   Button: {
     backgroundColor: '#A0545B',
     width: 100,
-    height: 20,
+    height: 60,
     borderRadius: 5
   },
 });

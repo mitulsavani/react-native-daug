@@ -312,7 +312,7 @@ locationContainer: {
 locationName: {
     marginLeft: 4,
     fontSize: 13,
-    fontFamily: 'Futura'
+    fontFamily: 'Comfortaa'
 },
 content: {
     marginLeft: 12,
@@ -320,7 +320,7 @@ content: {
     marginTop: 12,
     fontWeight: 'bold',
     fontSize: 24,
-    fontFamily: 'Futura'
+    fontFamily: 'Comfortaa'
 },
 headerButton: {
     color: '#C83E70',

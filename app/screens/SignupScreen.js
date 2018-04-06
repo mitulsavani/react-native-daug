@@ -14,7 +14,7 @@ export default class SignupScreen extends React.Component {
     title: "Sign Up",
     headerStyle: {backgroundColor: '#4C3ADC', borderBottomWidth: 0},
     headerTintColor: 'orange',
-    headerTitleStyle: { color: 'orange', fontSize: 20, fontFamily: 'Futura' }
+    headerTitleStyle: { color: 'orange', fontSize: 20 }
   };
 
   constructor(props){
@@ -106,7 +106,7 @@ export default class SignupScreen extends React.Component {
         style={styles.container}>
             <Input
                   placeholder = 'Name'
-                  inputStyle = {{ color: 'white', fontFamily: 'Futura' }}
+                  inputStyle = {{ color: 'white' }}
                   autoCapitalize = "none"
                   autoCorrect = {false}
                   returnKeyType = "next"
@@ -122,7 +122,7 @@ export default class SignupScreen extends React.Component {
             />
             <Input
                   placeholder = 'Email'
-                  inputStyle = {{ color: 'white', fontFamily: 'Futura' }}
+                  inputStyle = {{ color: 'white' }}
                   autoCapitalize = "none"
                   autoCorrect = {false}
                   keyboardType = "email-address"
@@ -141,7 +141,7 @@ export default class SignupScreen extends React.Component {
                   placeholder = 'Password'
                   palceholderTextColor="white"
                   secureTextEntry
-                  inputStyle = {{ color: 'white', fontFamily: 'Futura' }}
+                  inputStyle = {{ color: 'white' }}
                   autoCapitalize = "none"
                   autoCorrect = {false}
                   keyboardType = "email-address"
@@ -174,7 +174,7 @@ export default class SignupScreen extends React.Component {
                     color='white'
                   />
                 }
-                titleStyle = {{fontSize: 20, fontFamily: 'Futura'}}
+                titleStyle = {{fontSize: 20}}
                 onPress = {() => this.signupButtonPressed()}
               />
           </View>
