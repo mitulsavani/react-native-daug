@@ -1,42 +1,30 @@
 <p align="center">
-<a href="https://github.com/jkhusanov/daug-mobile/">
-<img alt="daug" src="/assets/daugLogo.png" width="250">
+<a href="https://github.com/mitulsavani/react-native-daug">
+<img alt="daug" src="./assets/daugLogo.png" width="250">
 </a>
 </p>
 
 <h3 align="center">
-Daug mobile app
+Daug 
 </h3>
-
-<p align="center">
-Daug is a social network for pets.
-</p>
 
 ## What's Daug?
 
-**Daug is a social network for pets.**
+**Daug is a fully functioning Social Network mobile application for pet owners to post pictures of their pets and share it with community.**
 
-- Your pets can **sign up or login** using their paws.
-- They can **upload selfies** or **post their thoughts** for other pets to see.
-- They can also look at **other pets posts** and either **paw** (like) or **scratch** (dislike) it.
+## Functionality
+- Users can **sign up** & **log in** into the app
+- Users can **create** and **upload pictures** new post
+- Users can **like, dislike** and **comment** on others post
+- Users can **follow** each other
 
 ### [Demo - Try it on Expo](https://exp.host/@mitulsavani/daug-mobile)
 ![daug_demo](./assets/daug.gif)
 
 
-## Functionality
-- Daug is a fully functioning Social Network app
-- Users can Sign up & Log into the app
-- Users can create a new Posts
-- Users can like and comments on Posts
-- Users can follow each other
-
 Used [React Native AWS3](https://github.com/benjreinhart/react-native-aws3)  library to let the users upload a new profile picture. Additionally, I used [React Native Elements](https://github.com/react-native-training/react-native-elements) library to build UI, [React Navigation](https://reactnavigation.org/) library to handle navigation, and packages such as react-native-modal and [React-Native-Keyboard-Aware-Scroll-View](https://github.com/APSL/react-native-keyboard-aware-scroll-view) to improve UI.
 
-Would like to implement Redux in the future to better manage the state. Also would like to add themeing to the app to enable light/dark modes, and overall make the app more dynamic and functional.
-
-
-## Designs
+## Designs and Inspiration
 
 Intro, Login & Sign Up screens are based on **Robinhood App**.
 
@@ -47,7 +35,7 @@ Social Feed screen is based on **Facebook** and **Instagram**.
 
 ## Milestones
 
-Below you can see my main milestones and how I achieved them
+Learn more about the milestones of the product and how I achieved them.
 
 ## Milestone #1
 
@@ -114,14 +102,17 @@ Below you can see my main milestones and how I achieved them
 - [ ] :star: **Bonus:** Use Redux to share state between tab bar & screens
 - [x] Add working gif of app to `README.MD`
 
+## Future Ideas
+
+Would like to implement Redux in the future to better manage the state. Also would like to add themes to the app to enable light/dark modes, and overall make the app more dynamic and functional.
+
 ## Getting started
 
 ```
-git clone git@github.com:mitulsavani/daug-mobile.git
-
+git clone https://github.com/mitulsavani/react-native-daug.git
 exp start
-
 exp ios
+exp android
 ```
 
 ## Feedback
@@ -129,4 +120,4 @@ exp ios
 For any other questions about this repo in general please reach out to [**@mitulsavani**](https://github.com/mitulsavani) on Github. <br>
 PS: Feel free to fork it if you find my app interesting.
 
-
+Thanks
